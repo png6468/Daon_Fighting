@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+	<!-- 1.접속정보 파일 *.properties을 bean으로 등록  -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 2.datasource 객체로 등록  : Transaction 사용(ref)-->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver}"/>
+		<property name="url" value="${url}"/>
+		<property name="username" value="${user}"/>
+		<property name="password" value="${pw}"/>
+		<!-- Spring에서만 사용하는 추가 적인 옵션 -->
+		<property name="defaultAutoCommit" value="true"/>
+	</bean>
+	
+	<!-- 3.Spring에 넣어 줄 수 있도록 DataSource와 + MyBatis 세팅 해주고 bean으로 등록 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/spring/sqls/mybatisConfigure.xml"/>
+	</bean>
+	
+	<!-- 4.Spring에서 사용하는 Bean으로 등록 : @Autowired로 사용  -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+	</bean>
+			
+	<!-- Transaction 처리 -->
+<!-- 접속정보 JDBC에서의 Connection : DataSource -->
+<!-- @Transactional(readOnly=true)  -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"/>
+</bean>
+
+<!-- AOP를 통해 자동으로 예외가(Service) 발생하면 Service의 모든 기능(Dao)를 Rollback 하겠다. -->
+<tx:advice id="txAdice" transaction-manager="transactionManager">
+	<tx:attributes>
+		<tx:method name="*" rollback-for="Exception" propagation="REQUIRED"/>
+	</tx:attributes>
+</tx:advice>
+
+<aop:config>
+	<aop:advisor pointcut="execution(* com.min.edu.model.*Service*.*(..))" advice-ref="txAdice"/>
+</aop:config>
+			
+</beans>
