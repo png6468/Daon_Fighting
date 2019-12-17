@@ -51,4 +51,11 @@ public class ByeongController {
 		
 		return "Main_admin";
 	}
+	
+	@RequestMapping(value = "/logout_Admin.do", method = RequestMethod.GET)
+	public String logout_Admin(HttpSession session) {
+		session.removeAttribute("dto");
+		return "redirect:./admin_login.do";
+	}
+	
 }

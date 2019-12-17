@@ -7,7 +7,6 @@
 	<title>Home</title>
 </head>
 <body>
-
 	<form action="./login_Admin.do" method="post">
 		<table border="1">
 			<tr>

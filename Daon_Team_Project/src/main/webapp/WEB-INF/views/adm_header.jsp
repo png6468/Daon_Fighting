@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@include file="/WEB-INF/views/adm_header.jsp"%>
-<a href="www.naver.com">야 잘 나오냐?!</a>
+	<% Admin_Dto dto = (Admin_Dto)session.getAttribute("dto"); %>
+	
 </body>
 </html>
