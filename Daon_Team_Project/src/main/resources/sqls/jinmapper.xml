@@ -3,7 +3,7 @@
 <mapper namespace="com.min.edu.model.JinDaon_DaoImpl.jingu">
 
 <!-- 과정복사 -->
-<select id="selCopy" parameterType="java.lang.String" resultType="java.util.List">
+<select id="selCopy" parameterType="java.lang.String" resultType="courseDto">
 SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
 	FROM(SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
 			FROM D_COURSE WHERE COU_NAME=#{cou_name} ORDER BY COU_CODE DESC) 
@@ -30,17 +30,119 @@ DELETE FROM D_COURSE
 </delete>
 
 <!-- 과정에속한 학생 조회 -->
+<select id="courseinStusel" parameterType="java.lang.String" resultType="stucouDto">
+SELECT STU_NAME,STU_ID,STU_PHONE,COU_NAME 
+	FROM D_STUDENT 
+		JOIN D_STUCOU 
+			USING(STU_ID) 
+				JOIN D_COURSE 
+					USING(COU_CODE) 
+		WHERE COU_CODE=#{cou_code}
+</select>
 <!-- 현재 과정 조회 -->
+<select id="iselCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME, STARTDATE, 
+	TOTALTIME, TEA_ID, ENDDATE, STATE 
+		FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, 
+				STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)
+			WHERE RN BETWEEN #{start} AND #{end} AND STATE ='I'
+</select>
 <!-- 종료 과정 조회 -->
+<select id="bselCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME,STARTDATE, 
+	TOTALTIME, TEA_ID, ENDDATE, STATE 
+		FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, 
+				STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)
+			WHERE RN BETWEEN #{start} AND #{end} AND STATE ='B'
+</select>
 <!-- 예정 과정 조회 -->
+<select id="wselCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME,STARTDATE, 
+	TOTALTIME, TEA_ID, ENDDATE, STATE 
+		FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, 
+				STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)
+			WHERE RN BETWEEN #{start} AND #{end} AND STATE ='W'
+</select>
 <!-- 과정 상세 조회 -->
+<select id="detailCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, 
+	TOTALTIME, TEA_ID, ENDDATE, STATEFROM D_COURSEWHERE COU_CODE =#{cou_code}
+</select>
 <!-- 강사 현재 과정 조회 -->
+<select id="teaiselCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)WHERE TEA_ID=`JAVATEA` AND RN BETWEEN #{start} AND #{end}AND STATE=`I`;
+</select>
 <!-- 강사 종료 과정 조회 -->
+<select id="teabselCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)WHERE TEA_ID=`JAVATEA` AND RN BETWEEN #{start} AND #{end}AND STATE=`B`;
+</select>
 <!-- 강사 예정 과정 조회 -->
+<select id="teawselCourse" parameterType="" resultType="">
+SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)WHERE TEA_ID=`JAVATEA` AND RN BETWEEN #{start} AND #{end}AND STATE=`W`;
+</select>
 <!-- 학생의 현재 과정 조회 -->
+<select id="stuiselCourse" parameterType="" resultType="">
+SELECT SCSEQ,STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME,ENDDATE,COU_CNT,STATEFROM D_STUCOU JOIN D_COURSEUSING(COU_CODE)WHERE STATE =`I`AND STU_ID =#{stu_id};
+</select>
 <!-- 학생의 종료 과정 조회 -->
+<select id="stubselCourse" parameterType="" resultType="">
+SELECT SCSEQ,STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, ENDDATE, COU_CNT, STATEFROM D_STUCOU JOIN D_COURSEUSING(COU_CODE)WHERE STATE =`W`AND STU_ID =#{stu_id};
+</select>
 <!-- 학생의 예정 과정 조회 -->
+<select id="stuwselCourse" parameterType="" resultType="">
+SELECT SCSEQ,STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME,ENDDATE,COU_CNT,STATEFROM D_STUCOU JOIN D_COURSEUSING(COU_CODE)WHERE STATE =`W`AND STU_ID =#{stu_id};
+</select>
 <!-- 과정 + 학생 등록 -->
+<insert id="studentCourse" parameterType="">
+INSERT INTO D_STUCOU(SCSEQ, COU_CODE, STU_ID)VALUES(SEQ.NEXTVAL,#{cou_code},#{stu_id});
+</insert>
+<!-- 과목 등록 -->
+<insert id="insertSubject" parameterType="">
+INSERT INTO D_SUBJECT (SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME)VALUES(SEQ.NEXTVAL,`sub_name`,`sub_exp`,`sub_time`);
+</insert>
+<!-- 과목 조회 -->
+<select id="selSubject" parameterType="" resultType="">
+SELECT SUB_CODE, SUB_NAME, SUB_TIMEFROM (SELECT SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME, ROWNUM RN FROM D_SUBJECT)WHERE RN BETWEEN #{start} AND #{end};
+</select>
+<!-- 과목 상세조회 -->
+<select id="detailSubject" parameterType="" resultType="">
+SELECT SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIMEFROM RAINBOW.D_SUBJECTWHERE SUB_CODE=#{sub_code};
+</select>
+<!-- 과목 수정 -->
+<update id="updateSubject" parameterType="">
+UPDATE D_SUBJECT SET SUB_NAME = #{sub_name}, SUB_EXP=#{sub_exp}, SUB_TIME=#{sub_time}WHERE SUB_CODE =#{sub_code}AND (SELECT COUNT(*) FROM D_CURRICULUM WHERE SUB_CODE=#{sub_code})=0;
+</update>
+
+<!-- 과목 삭제 -->
+<delete id="deleteSubject" parameterType="">
+DELETE FROM D_SUBJECT WHERE (SELECT COUNT(*)FROM D_CURRICULUMWHERE SUB_CODE=#{sub_code})=0AND SUB_CODE=#{sub_code};
+</delete>
+
+<!-- 커리큘럼 등록 -->
+<insert id="insertCurriculum" parameterType="">
+INSERT INTO D_CURRICULUM(CUR_CODE,COU_CODE, SUB_CODE)VALUES(SEQ,NEXTVAL,#{cou_code},#{sub_code});
+</insert>
+
+<!-- 관리자의 커리큘럼 조회 -->
+<select id="adminselCurriculum" parameterType="" resultType="">
+SELECT AVG(점수) JUMSU, SUB_CODE, SUB_NAME, SUB_TIME,COU_NAME, CUR_CODE FROM(SELECT SUM(JUMSU)점수, SUB_CODE, SUB_NAME, SUB_TIME,COU_NAME,CUR_CODE,ROWNUM RN FROM D_ANSWERSCOREJOIN D_CUREXA USING(CUREXA_CODE)JOIN D_CURRICULUM USING(CUR_CODE)JOIN D_SUBJECT USING(SUB_CODE)JOIN D_COURSE USING(COU_CODE)WHERE COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_CODE, SUB_NAME, SUB_TIME,COU_NAME,CUR_CODE,ROWNUM)WHERE RN BETWEEN #{start} AND #{end}GROUP BY SUB_CODE, SUB_NAME,SUB_TIME,COU_NAME,CUR_CODE;
+</select>
+
+<!-- 강사의 커리큘럼 조회 -->
+<select id="teaselCurriculum" parameterType="" resultType="">
+SELECT AVG(점수) JUMSU, SUB_CODE, SUB_NAME, SUB_TIME, CUR_CODE FROM(SELECT SUM(JUMSU)점수, SUB_CODE, SUB_NAME, SUB_TIME, CUR_CODE FROM D_ANSWERSCOREJOIN D_CUREXA USING(CUREXA_CODE)JOIN D_CURRICULUM USING(CUR_CODE)JOIN D_SUBJECT USING(SUB_CODE)JOIN D_COURSE USING(COU_CODE)WHERE COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_NAME, SUB_TIME, CUR_CODE)GROUP BY SUB_CODE, SUB_NAME,SUB_TIME, CUR_CODE;
+</select>
+
+<!-- 학생의 커리큘럼 조회 -->
+<select id="stuselCurriculu" parameterType="" resultType="">
+SELECT SUB_CODE, SUB_NAME, SUB_TIME, SUM(JUMSU) JUMSU, CUR_CODEFROM D_STUCOUJOIN D_COURSE USING(COU_CODE)JOIN D_CURRICULUM USING(COU_CODE)JOIN D_SUBJECT USING(SUB_CODE)JOIN D_ANSWERSCORE USING(STU_ID)WHERE STU_ID=#{stu_id}AND COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_CODE, SUB_NAME, SUB_TIME,CUR_CODE;
+</select>
+
+<!-- 커리큘럼 삭제 -->
+<delete id="deleteCurriculum" parameterType="">
+DELETE FROM D_CURRICULUMWHERE CUR_CODE=#{cur_code}AND (SELECT COUNT(CUREXA_CODE) FROM D_CUREXA WHERE EXA_CODE ^= `1`) ^= 0;
+</delete>
+
 
 
 
