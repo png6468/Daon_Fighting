@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.ByeongDaon_DaoImpl.byeong">
+
+	<select id="idCheckAdmin" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT COUNT(ADM_ID)  FROM D_ADMIN   WHERE ADM_ID=#{adm_id}
+	</select>
+	
+	<select id="login_Admin" parameterType="java.util.Map" resultType="adminDto">
+		SELECT ADM_ID FROM D_ADMIN WHERE ADM_ID=#{adm_id} AND ADM_PW=#{adm_pw}
+	</select>
+	
+	<select id="myPageAdmin" parameterType="java.lang.String" resultType="daminDto">
+		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN WHERE = #{adm_id}
+	</select>
+	
+	<select id="allAdmin" resultType="daminDto">
+		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN
+	</select>
 </mapper>
