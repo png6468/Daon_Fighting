@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.JinDaon_DaoImpl.jingu">
+
+<!-- 과정복사 -->
+<select id="selCopy" parameterType="java.lang.String" resultType="java.util.List">
+SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
+	FROM(SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
+			FROM D_COURSE WHERE COU_NAME=#{cou_name} ORDER BY COU_CODE DESC) 
+	WHERE ROWNUM=1
+</select>
+<!-- 과정생성 -->
+<insert id="insertCourse" parameterType="courseDto">
+INSERT INTO D_COURSE(COU_CODE, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, ENDDATE, COU_CNT,STATE)
+	VALUES (SEQ.NEXTVAL,#{tea_id},#{cou_name},#{cou_exp},#{startdate},NULL,NULL,
+				(SELECT NVL(MAX(COU_CNT),0)+1 FROM D_COURSE WHERE COU_NAME = #{cou_name}),'B')
+</insert>
+<!-- 예정과정수정 -->
+<update id="wupdateCourse" parameterType="courseDto">
+UPDATE D_COURSE SET TEA_ID =#{tea_id}, STARTDATE=#{startdate}
+	WHERE COU_CODE =#{cou_code}
+</update>
+<!-- 과정삭제 -->
+<delete id="deleteCourse" parameterType="java.lang.String">
+DELETE FROM D_COURSE 
+	WHERE (SELECT COUNT(*) 
+				FROM D_CURRICULUM 
+					WHERE COU_CODE=#{cou_code})=0
+					AND COU_CODE = #{cou_code}
+</delete>
+
+<!-- 과정에속한 학생 조회 -->
+<!-- 현재 과정 조회 -->
+<!-- 종료 과정 조회 -->
+<!-- 예정 과정 조회 -->
+<!-- 과정 상세 조회 -->
+<!-- 강사 현재 과정 조회 -->
+<!-- 강사 종료 과정 조회 -->
+<!-- 강사 예정 과정 조회 -->
+<!-- 학생의 현재 과정 조회 -->
+<!-- 학생의 종료 과정 조회 -->
+<!-- 학생의 예정 과정 조회 -->
+<!-- 과정 + 학생 등록 -->
+
+
+
+
 </mapper>

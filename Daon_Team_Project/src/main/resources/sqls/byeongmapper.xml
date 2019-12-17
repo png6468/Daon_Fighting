@@ -10,11 +10,15 @@
 		SELECT ADM_ID FROM D_ADMIN WHERE ADM_ID=#{adm_id} AND ADM_PW=#{adm_pw}
 	</select>
 	
-	<select id="myPageAdmin" parameterType="java.lang.String" resultType="daminDto">
+	<select id="myPageAdmin" parameterType="java.lang.String" resultType="adminDto">
 		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN WHERE = #{adm_id}
 	</select>
 	
-	<select id="allAdmin" resultType="daminDto">
+	<select id="allAdmin" resultType="adminDto">
 		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN
 	</select>
+	
+	
+	
+	
 </mapper>

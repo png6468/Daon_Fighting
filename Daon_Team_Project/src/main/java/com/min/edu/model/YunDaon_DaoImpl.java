@@ -15,7 +15,7 @@ import com.min.edu.dtos.ExamSelect_Dto;
 @Repository
 public class YunDaon_DaoImpl implements YunDaon_IDao {
 
-	private final Logger logger = LoggerFactory.getLogger(YunController.class);
+	private final Logger logger = LoggerFactory.getLogger(YunDaon_DaoImpl.class);
 	private final String ns = "com.min.edu.model.YunDaon_DaoImpl.yunwoo.";
 	
 	@Autowired

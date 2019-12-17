@@ -17,7 +17,7 @@ public class YunDaon_ServiceImpl implements YunDaon_IService {
 	@Autowired
 	private YunDaon_IDao dao;
 
-	private final Logger logger = LoggerFactory.getLogger(YunController.class);
+	private final Logger logger = LoggerFactory.getLogger(YunDaon_ServiceImpl.class);
 	
 	@Override
 	public List<String> searchsel1(Map<Object, Object> map) {
