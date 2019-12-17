@@ -44,7 +44,7 @@ public class Paging_Dto implements Serializable{
 		return index*listNum+1;
 	}
 	//글 리스트중 끝 번호
-	public int getLast() {
+	public int getEnd() {
 		return (index*listNum)+listNum;
 	}
 //	<1~5><6~10><11~15> 1,2,3,4,5
