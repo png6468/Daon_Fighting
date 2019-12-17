@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.JinDaon_DaoImpl.jingu">
+
+<!-- 과정복사 -->
+<select id="" parameterType="" resultType="">
+SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
+	FROM(SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
+			FROM D_COURSE WHERE COU_NAME=#{cou_name} ORDER BY COU_CODE DESC) 
+	WHERE ROWNUM=1
+</select>
+<!-- 과정생성 -->
+<insert id="">
+
+INSERT INTO D_COURSE (COU_CODE, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, ENDDATE, COU_CNT,STATE)VALUES (SEQ.NEXTVAL,#{tea_id},#{cou_name},#{cou_exp},#{startdate},NULL,NULL,(SELECT NVL(MAX(COU_CNT),0)+1 FROM D_COURSE WHERE COU_NAME = #{cou_name}),`B`);
+</insert>
+<!-- 예정과정수정 -->
+<!-- 과정삭제 -->
+
 </mapper>
