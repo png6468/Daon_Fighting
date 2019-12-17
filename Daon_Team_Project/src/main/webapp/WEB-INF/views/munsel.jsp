@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="./munlist.do?sub=1">객관식 문제 리스트 조회</a>
+	<a href="./munlist.do?sub=1&mean=S">객관식 문제 리스트 조회</a>
+	<a href="./munlist.do?sub=1&mean=D">서술형 문제 리스트 조회</a>
+	<a href="./munlist.do?sub=1&mean=P">포트폴리오 문제 리스트 조회</a>
+	
 </body>
 </html>
