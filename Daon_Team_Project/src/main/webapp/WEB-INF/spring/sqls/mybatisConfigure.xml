@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-
+	<typeAliases>
+		<typeAlias type="com.min.edu.dtos.Admin_Dto" alias="adminDto"/>
+		<typeAlias type="com.min.edu.dtos.AnswerScore_Dto" alias="answerscoreDto"/>
+		<typeAlias type="com.min.edu.dtos.Course_Dto" alias="courseDto"/>
+		<typeAlias type="com.min.edu.dtos.CurExa_Dto" alias="curexaDto"/>
+		<typeAlias type="com.min.edu.dtos.Curriculum_Dto" alias="curriculumDto"/>
+		<typeAlias type="com.min.edu.dtos.DescPortSel_Dto" alias="descportselDto"/>
+		<typeAlias type="com.min.edu.dtos.Exam_Dto" alias="examDto"/>
+		<typeAlias type="com.min.edu.dtos.ExamDesc_Dto" alias="examdescDto"/>
+		<typeAlias type="com.min.edu.dtos.ExamSelect_Dto" alias="examselectDto"/>
+		<typeAlias type="com.min.edu.dtos.Paging_Dto" alias="pagingDto"/>
+		<typeAlias type="com.min.edu.dtos.SelectSel_Dto" alias="selectselDto"/>
+		<typeAlias type="com.min.edu.dtos.StuAvgSel_Dto" alias="stuavgselDto"/>
+		<typeAlias type="com.min.edu.dtos.StuCou_Dto" alias="stucouDto"/>
+		<typeAlias type="com.min.edu.dtos.StuCouSel_Dto" alias="stucouselDto"/>
+		<typeAlias type="com.min.edu.dtos.Student_Dto" alias="studentDto"/>
+		<typeAlias type="com.min.edu.dtos.StuDetailSel_Dto" alias="studetailselDto"/>
+		<typeAlias type="com.min.edu.dtos.Subject_Dto" alias="subjectDto"/>
+		<typeAlias type="com.min.edu.dtos.Teacher_Dto" alias="teacherDto"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="/sqls/byeongmapper.xml"/>
+		<mapper resource="/sqls/jinmapper.xml"/>
+		<mapper resource="/sqls/nammapper.xml"/>
+		<mapper resource="/sqls/wanmapper.xml"/>
+		<mapper resource="/sqls/yunmapper.xml"/>
+	</mappers>
 </configuration>
