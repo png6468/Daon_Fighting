@@ -93,5 +93,11 @@ public class YunController {
 		return "selmun";
 	}
 	
+	@RequestMapping(value = "/createmun.do", method = RequestMethod.GET)
+	public String createmun(String sub) {
+		logger.info("문제 생성 화면");
+		return "createmun";
+	}
+	
 	
 }
