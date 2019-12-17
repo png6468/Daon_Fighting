@@ -19,6 +19,4 @@ public class WanController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WanController.class);
 	
-	
-	
 }
