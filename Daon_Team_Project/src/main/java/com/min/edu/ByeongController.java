@@ -47,6 +47,9 @@ public class ByeongController {
 		map.put("adm_pw", adm_pw);
 		
 		Admin_Dto dto = service.login_Admin(map);
+		
+		System.out.println(dto);
+		
 		session.setAttribute("dto", dto);
 		
 		return "Main_admin";

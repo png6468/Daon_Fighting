@@ -2,18 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.ByeongDaon_DaoImpl.byeong">
 
+	<!-- 관리자 아이디 체크 -->
 	<select id="idCheckAdmin" parameterType="java.lang.String" resultType="java.lang.String">
 		SELECT COUNT(ADM_ID)  FROM D_ADMIN   WHERE ADM_ID=#{adm_id}
 	</select>
 	
+	<!-- 관리자 로그인 -->
 	<select id="login_Admin" parameterType="java.util.Map" resultType="adminDto">
-		SELECT ADM_ID FROM D_ADMIN WHERE ADM_ID=#{adm_id} AND ADM_PW=#{adm_pw}
+		SELECT ADM_ID, ADM_AUTH FROM D_ADMIN WHERE ADM_ID=#{adm_id} AND ADM_PW=#{adm_pw} AND ADM_DELFLAG = 'N'
 	</select>
 	
+	<!-- 관리자 마이페이지 -->
 	<select id="myPageAdmin" parameterType="java.lang.String" resultType="adminDto">
 		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN WHERE = #{adm_id}
 	</select>
 	
+	<!-- 모든 관리자 조회 -->
 	<select id="allAdmin" resultType="adminDto">
 		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN
 	</select>
