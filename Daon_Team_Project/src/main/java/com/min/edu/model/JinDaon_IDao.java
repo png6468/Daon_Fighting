@@ -35,5 +35,4 @@ public interface JinDaon_IDao {
 	public boolean insertCurriculum(Curriculum_Dto dto);
 	// 학생의 커리큘럼 조회
 	public List<StuAvgSel_Dto> stuselCurriculu(Map<String, String> map);
-	
 }
