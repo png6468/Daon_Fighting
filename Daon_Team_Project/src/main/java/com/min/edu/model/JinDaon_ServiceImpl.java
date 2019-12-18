@@ -23,26 +23,12 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 	private JinDaon_IDao dao;
 	
 	private Logger logger = LoggerFactory.getLogger(JinDaon_ServiceImpl.class);
-	
-	//과정복사
-	@Override
-	public List<Course_Dto> selCopy(String cou_name) {
-		logger.info("selCopy 과정 복사, {}",cou_name);
-		return dao.selCopy(cou_name);
-	}
-
-	//과정생성
-	@Override
-	public boolean insertCourse(Course_Dto dto) {
-		logger.info("insertCourse 과정 생성, {}",dto);
-		return dao.insertCourse(dto);
-	}
 
 	//현재 과정 조회
 	@Override
-	public List<Course_Dto> iselCourse(Paging_Dto dto) {
-		logger.info("iselCourse 현재 과정 조회, {}",dto);
-		return dao.iselCourse(dto);
+	public List<Course_Dto> iselCourse(Map<String, String> map) {
+		logger.info("iselCourse 현재 과정 조회, {}",map);
+		return dao.iselCourse(map);
 	}
 
 	//과정 상세 조회
@@ -59,20 +45,6 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 		return dao.stuiselCourse(stu_id);
 	}
 
-	//과정에 학생 등록
-	@Override
-	public boolean studentCourse(StuCou_Dto dto) {
-		logger.info("studentCourse 과정에 학생 등록, {}",dto);
-		return dao.studentCourse(dto);
-	}
-
-	//과목 등록
-	@Override
-	public boolean insertSubject(Subject_Dto dto) {
-		logger.info("insertSubject 과목 등록, {}",dto);
-		return dao.insertSubject(dto);
-	}
-
 	//과목 조회
 	@Override
 	public List<Subject_Dto> selSubject(Paging_Dto dto) {
@@ -87,12 +59,6 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 		return dao.detailSubject(sub_code);
 	}
 
-	//커리큘럼 등록
-	@Override
-	public boolean insertCurriculum(Curriculum_Dto dto) {
-		logger.info("insertCurriculum 커리큘럼 등록, {}",dto);
-		return dao.insertCurriculum(dto);
-	}
 
 	//학생의 커리큘럼 조회
 	@Override

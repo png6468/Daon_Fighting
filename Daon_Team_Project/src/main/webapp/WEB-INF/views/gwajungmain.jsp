@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>과정 처음 페이지</title>
 </head>
 <body>
-<a href="./CourseList.do">임시테스트 : 클릭시 과정 리스트 화면으로 이동</a>
+<a href="./Course_List.do">임시테스트 : 클릭시 과정 리스트 화면으로 이동</a>
 </body>
 </html>

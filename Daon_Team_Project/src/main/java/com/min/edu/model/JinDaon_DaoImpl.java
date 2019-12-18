@@ -23,23 +23,11 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 	
 	private final String NS="com.min.edu.model.JinDaon_DaoImpl.jingu.";
 	
-	//과정 복사
-	@Override
-	public List<Course_Dto> selCopy(String cou_name) {
-		return sqlSession.selectList(NS+"selCopy", cou_name);
-	}
-
-	//과정 생성
-	@Override
-	public boolean insertCourse(Course_Dto dto) {
-		int cnt = sqlSession.insert(NS+"insertCourse", dto);
-		return cnt>0?true:false;
-	}
-
+	
 	//현재 과정 조회
 	@Override
-	public List<Course_Dto> iselCourse(Paging_Dto dto) {
-		return sqlSession.selectList(NS+"iselCourse", dto);
+	public List<Course_Dto> iselCourse(Map<String, String> map) {
+		return sqlSession.selectList(NS+"iselCourse", map);
 	}
 
 	//과정상세조회
@@ -54,20 +42,6 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 		return sqlSession.selectList(NS+"stuiselCourse", stu_id);
 	}
 
-	//과정에 학생 등록
-	@Override
-	public boolean studentCourse(StuCou_Dto dto) {
-		int cnt = sqlSession.insert(NS+"studentCourse", dto);
-		return cnt>0?true:false;
-	}
-
-	//과목 등록
-	@Override
-	public boolean insertSubject(Subject_Dto dto) {
-		int cnt = sqlSession.insert(NS+"insertSubject", dto);
-		return cnt>0?true:false;
-	}
-
 	//과목 조회
 	@Override
 	public List<Subject_Dto> selSubject(Paging_Dto dto) {
@@ -78,13 +52,6 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 	@Override
 	public Subject_Dto detailSubject(String sub_code) {
 		return sqlSession.selectOne(NS+"detailSubject", sub_code);
-	}
-
-	//커리큘럼 등록
-	@Override
-	public boolean insertCurriculum(Curriculum_Dto dto) {
-		int cnt = sqlSession.insert(NS+"insertCurriculum", dto);
-		return cnt>0?true:false;
 	}
 
 	//학생의 커리큘럼 조회

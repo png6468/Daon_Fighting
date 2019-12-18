@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.min.edu.dtos.Course_Dto;
 import com.min.edu.dtos.Paging_Dto;
@@ -26,41 +27,19 @@ public class JinController {
 	
 	@RequestMapping(value = "/sijak.do", method = RequestMethod.GET)
 	public String jintest() {
-		logger.info("현재 과정 조회");
+		logger.info("시작페이지 이동");
 		return "gwajungmain";
 	}
 	
-	@RequestMapping(value = "/CourseList.do",method = RequestMethod.GET)
+	@RequestMapping(value = "/Course_List.do",method = RequestMethod.GET)
 	public String CourseList(Paging_Dto dto, Model model) {
-		List<Course_Dto> lists = service.iselCourse(dto);
+		logger.info("현재 진행중인 전체 과정 조회");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startList", "1");
+		map.put("endList", "5");
+		List<Course_Dto> lists = service.iselCourse(map);
 		model.addAttribute("lists", lists);
 		return "Course_List";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

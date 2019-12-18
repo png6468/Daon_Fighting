@@ -2,27 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.JinDaon_DaoImpl.jingu">
 
-<!-- 과정복사 -->
-<select id="selCopy" parameterType="java.lang.String" resultType="courseDto">
-SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
-	FROM(SELECT TEA_ID, COU_NAME, COU_EXP, STARTDATE, STATE, COU_CNT 
-			FROM D_COURSE WHERE COU_NAME=#{cou_name} ORDER BY COU_CODE DESC) 
-	WHERE ROWNUM=1
-</select>
-<!-- 과정생성 -->
-<insert id="insertCourse" parameterType="courseDto">
-INSERT INTO D_COURSE(COU_CODE, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, ENDDATE, COU_CNT,STATE)
-	VALUES (SEQ.NEXTVAL,#{tea_id},#{cou_name},#{cou_exp},#{startdate},NULL,NULL,
-				(SELECT NVL(MAX(COU_CNT),0)+1 FROM D_COURSE WHERE COU_NAME = #{cou_name}),'B')
-</insert>
 <!-- 현재 과정 조회 -->
-<select id="iselCourse" parameterType="pagingDto" resultType="courseDto">
+<select id="iselCourse" parameterType="java.util.Map" resultType="courseDto">
 SELECT COU_CODE, COU_CNT, COU_NAME, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE 
 		FROM(SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, 
 				STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM D_COURSE)
-			WHERE RN BETWEEN #{start} AND #{end} AND STATE ='I'
+			WHERE RN BETWEEN #{startList} AND #{endList} AND STATE ='I'
 </select>
-
 <!-- 과정 상세 조회 -->
 <select id="detailCourse" parameterType="java.lang.String" resultType="courseDto">
 SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE, 
@@ -37,21 +23,11 @@ SELECT SCSEQ, STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE, TOTALTIME, ENDDATE, 
 	FROM D_STUCOU JOIN D_COURSE USING(COU_CODE)
 		WHERE STATE ='I' AND STU_ID =#{stu_id}
 </select>
-<!-- 과정 + 학생 등록 -->
-<insert id="studentCourse" parameterType="stucouDto">
-INSERT INTO D_STUCOU(SCSEQ, COU_CODE, STU_ID)
-	VALUES(SEQ.NEXTVAL,#{cou_code},#{stu_id})
-</insert>
-<!-- 과목 등록 -->
-<insert id="insertSubject" parameterType="subjectDto">
-INSERT INTO D_SUBJECT (SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME)
-	VALUES(SEQ.NEXTVAL,#{sub_name},#{sub_exp},#{sub_time})
-</insert>
 <!-- 과목 조회 -->
-<select id="selSubject" parameterType="pagingDto" resultType="subjectDto">
+<select id="selSubject" parameterType="java.util.Map" resultType="subjectDto">
 SELECT SUB_CODE, SUB_NAME, SUB_TIME
 	FROM (SELECT SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME, ROWNUM RN FROM D_SUBJECT)
-		WHERE RN BETWEEN #{start} AND #{end}
+		WHERE RN BETWEEN #{startList} AND #{endList}
 </select>
 <!-- 과목 상세조회 -->
 <select id="detailSubject" parameterType="java.lang.String" resultType="subjectDto">
@@ -59,13 +35,6 @@ SELECT SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME
 	FROM D_SUBJECT
 		WHERE SUB_CODE=#{sub_code}
 </select>
-
-<!-- 커리큘럼 등록 -->
-<insert id="insertCurriculum" parameterType="curriculumDto">
-INSERT INTO D_CURRICULUM(CUR_CODE,COU_CODE, SUB_CODE)
-	VALUES(SEQ.NEXTVAL,#{cou_code},#{sub_code})
-</insert>
-
 <!-- 학생의 커리큘럼 조회 ???-->
 <select id="stuselCurriculu" parameterType="java.util.Map" resultType="stuavgselDto">
 SELECT SUB_CODE, SUB_NAME, SUB_TIME, SUM(JUMSU) JUMSU, CUR_CODE
