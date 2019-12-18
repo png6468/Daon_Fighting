@@ -1,4 +1,3 @@
-<%@page import="com.min.edu.dtos.Paging_Dto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,5 +8,6 @@
 </head>
 <body>
 <a href="./Course_List.do">임시테스트 : 클릭시 과정 리스트 화면으로 이동</a>
+<a href="./Poolgi.do?cur_code=16&sub_name=과목명">임시테스트 : 클릭시 문제 풀기 화면으로 이동</a>
 </body>
 </html>
