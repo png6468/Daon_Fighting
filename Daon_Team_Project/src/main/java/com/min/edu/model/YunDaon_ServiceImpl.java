@@ -18,11 +18,9 @@ public class YunDaon_ServiceImpl implements YunDaon_IService {
 	@Autowired
 	private YunDaon_IDao dao;
 
-	private final Logger logger = LoggerFactory.getLogger(YunDaon_ServiceImpl.class);
 	
 	@Override
 	public List<String> searchsel1(Map<Object, Object> map) {
-		logger.info("여기 나오니");
 		List<String> list = dao.searchsel1(map);
 		return list;
 	}
@@ -35,7 +33,6 @@ public class YunDaon_ServiceImpl implements YunDaon_IService {
 
 	@Override
 	public List<String> searchdes1(Map<Object, Object> map) {
-		logger.info("여기 나오니");
 		List<String> list = dao.searchdes1(map);
 		return list;
 	}
@@ -48,7 +45,6 @@ public class YunDaon_ServiceImpl implements YunDaon_IService {
 
 	@Override
 	public List<String> searchport1(Map<Object, Object> map) {
-		logger.info("여기 나오니");
 		List<String> list = dao.searchport1(map);
 		return list;
 	}

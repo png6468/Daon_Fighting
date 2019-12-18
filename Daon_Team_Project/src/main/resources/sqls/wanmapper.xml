@@ -1,4 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.WanDaon_DaoImpl.wanjong">
+
+<select id="">
+	SELECT EXA_CODE, CUREXA_CODE, CUR_CODE, CONTENT,  FILENAME, STANDARD 
+		FROM D_CUREXA 
+			JOIN D_EXAM USING(EXA_CODE)
+			JOIN D_EXAMDESCRIPTIVE USING(EXA_CODE)
+				WHERE EXA_MEAN = 'D'
+				AND CUR_CODE =#{cur_code}
+</select>
+
+<select id="">
+	SELECT EXA_CODE, CUREXA_CODE, CUR_CODE, CONTENT, FILENAME, STANDARD 
+		FROM D_CUREXA 
+			JOIN D_EXAM USING(EXA_CODE)
+			JOIN D_EXAMDESCRIPTIVE USING(EXA_CODE)
+				WHERE EXA_MEAN = 'P'
+				AND CUR_CODE = #{cur_code}
+</select>
+
+<update id="">
+	UPDATE D_ANSWERSCORE SET 
+		JUMSU = (SELECT ALLOT FROM D_CUREXA WHERE EXA_CODE = #{exa_code}),
+		CHECK='O'
+			WHERE (SELECT EXA_MEAN FROM D_EXAM WHERE EXA_CODE = #{exa_code}) = 'S'
+			AND (SELECT COR_ANSWER FROM D_CUREXA JOIN D_EXAMSELECTUSING(EXA_CODE) 
+					WHERE EXA_CODE = #{exa_code})
+				= (SELECT ANSWER FROM D_ANSWERSCORE JOIN D_CUREXA USING(CUREXA_CODE) 
+					WHERE EXA_CODE = #{exa_code} AND STU_ID = #{stu_id}) 
+			AND STU_ID = #{stu_id} 
+			AND CUREXA_CODE = (SELECT CUREXA_CODE FROM D_CUREXA WHERE EXA_CODE = #{exa_code})
+</update>
+
+<select id="">
+	SELECT ANSWER, STU_ID, NEWFILENAME 
+		FROM D_ANSWERSCORE 
+			JOIN D_CUREXA USING(CUREXA_CODE) 
+			JOIN D_EXAM USING(EXA_CODE)
+				WHERE EXA_CODE = #{exa_code} AND STU_ID=#{stu_id}
+</select>
+
+
+<select id="">
+	SELECT ALLOT, CUREXA_CODE, CUR_CODE 
+		FROM D_CUREXA 
+			WHERE EXA_CODE=#{exa_code} AND CUR_CODE=#{cur_code}
+</select>
+
+<update id="">
+	UPDATE D_ANSWERSCORE 
+		SET JUMSU = #{jumsu}, CHECK='O' WHERE STU_ID=#{stu_id} AND CUREXA_CODE=#{curexa_code} AND CHECK='X'
+</update>
+
+
 </mapper>
