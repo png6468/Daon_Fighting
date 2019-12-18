@@ -1,17 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="./munlist.do?sub=1&mean=S">°´°ü½Ä ¹®Á¦ ¸®½ºÆ® Á¶È¸</a>
-	<a href="./munlist.do?sub=1&mean=D">¼­¼úÇü ¹®Á¦ ¸®½ºÆ® Á¶È¸</a>
-	<a href="./munlist.do?sub=1&mean=P">Æ÷Æ®Æú¸®¿À ¹®Á¦ ¸®½ºÆ® Á¶È¸</a>
+	<a href="./munlist.do?sub=1&mean=S">ê°ê´€ì‹ ë¬¸ì œ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ</a>
+	<a href="./munlist.do?sub=1&mean=D">ì„œìˆ í˜• ë¬¸ì œ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ</a>
+	<a href="./munlist.do?sub=1&mean=P">í¬íŠ¸í´ë¦¬ì˜¤ ë¬¸ì œ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ</a>
 	
 	
-	<a href="./createmun.do?sub=1">»õ ¹®Á¦ »ý¼º</a>
+	<a href="./createmun.do?sub=1">ìƒˆ ë¬¸ì œ ìƒì„±</a>
 </body>
 </html>

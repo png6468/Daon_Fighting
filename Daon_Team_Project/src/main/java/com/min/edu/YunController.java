@@ -1,8 +1,17 @@
 package com.min.edu;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.MidiDevice.Info;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +20,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.min.edu.dtos.ExamDesc_Dto;
 import com.min.edu.dtos.ExamSelect_Dto;
 import com.min.edu.model.YunDaon_IDao;
@@ -99,5 +111,49 @@ public class YunController {
 		return "createmun";
 	}
 	
+	@RequestMapping(value = "/imgUp.do", method = RequestMethod.POST)
+	 public void imgUp(HttpServletRequest req, HttpServletResponse resp, @RequestParam MultipartFile upload) {
+		 logger.info("여기조차 못오네 ㅠㅠ");
+		 resp.setCharacterEncoding("UTF-8");
+		 resp.setContentType("text/html;charset=UTF-8");
+		 OutputStream out = null;
+		 PrintWriter printWriter = null;
+		 JsonObject json = new JsonObject();
+		 String fileName = upload.getOriginalFilename();
+		 
+		 try {
+			byte[] bytes = upload.getBytes();
+			String attachPath = "C:\\workspace_dorin\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Daon_Team_Project\\image\\";
+			String uploadPath = attachPath.replace("/", "\\")+fileName;
+			
+			out = new FileOutputStream(new File(uploadPath));
+			out.write(bytes);
+			
+			printWriter = resp.getWriter();
+			String fileUrl = "http://localhost:8099/Daon_Team_Project/image/"+fileName;
+			
+			json.addProperty("uploaded", 1);
+			json.addProperty("fileName", fileName);
+			json.addProperty("url", fileUrl);
+			
+			printWriter.println(json);
+			req.setAttribute("fileUrl", fileUrl);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(printWriter != null) {
+				printWriter.close();
+			}
+		}		 
+	 }
 	
 }

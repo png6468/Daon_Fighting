@@ -3,12 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <script type="text/javascript" src="./ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="./js/jquery-3.4.1.js"></script>
 <script type="text/javascript">
+	//ck에디터
 	$(function() {
 		CKEDITOR.replace('ckeditor', {
 			width : "100%",
@@ -30,12 +31,6 @@
 	}
 </script>
 <body>
-<h1>자아 문제를 만들어 볼거에요?</h1>
-<h1>온클릭을 걸어서 객/서/포 페이지 이동 없이 뿌리게 할까</h1>
-<h1>페이지 이동을 통해 값을 뿌리게 할까</h1>
-<h1>만약 페이지 이동없이 양식을 뿌리게 만드려면</h1>
-<h1>그 뭐냐 객/서/포 에 해당하는 모든 양식이 있는데 선택 안된 양식은 hide되있는 것 이거지!!!!</h1>
-
 <!-- 객관식 문제 생성 -->
 <form action="">
 <table border="1">
@@ -46,11 +41,11 @@
 	</tr>
 	<tr>
 		<td colspan="4">
-			<textarea rows="4" cols="4" id="ckeditor" name="content"></textarea>
+			<textarea rows="4" cols="4" id="ckeditor"></textarea>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="4">그림 <input type="file" name="filename" id="file" onchange="LoadImg(this)"></td>
+		<td colspan="4">파일<input type="file" name="filename" id="file" onchange="LoadImg(this)"></td>
 	</tr>
 	<tr>
 		<td colspan="4"><img id="LoadedImg"></td>

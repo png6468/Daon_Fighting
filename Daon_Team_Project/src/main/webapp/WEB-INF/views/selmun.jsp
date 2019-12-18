@@ -1,13 +1,13 @@
 <%@page import="com.min.edu.dtos.ExamDesc_Dto"%>
 <%@page import="com.min.edu.dtos.ExamSelect_Dto"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -15,7 +15,7 @@
 <% 
 	String mean = (String)request.getAttribute("mean");
 %>
-<h1>¿©±â ¿À³Ä?</h1>
+<h1>ì—¬ê¸° ì˜¤ëƒ?</h1>
 <table border="1">
 	<%
 	if(mean.equalsIgnoreCase("S")){
@@ -24,12 +24,12 @@
 	<thead>
 	<tr>
 		<td><input type="checkbox"></td>
-		<td>¹®Á¦³»¿ë</td>
-		<td>±×¸²</td>
-		<td>Á¤´ä</td>
-		<td>¿À´ä1</td>
-		<td>¿À´ä2</td>
-		<td>¿À´ä3</td>
+		<td>ë¬¸ì œë‚´ìš©</td>
+		<td>ê·¸ë¦¼</td>
+		<td>ì •ë‹µ</td>
+		<td>ì˜¤ë‹µ1</td>
+		<td>ì˜¤ë‹µ2</td>
+		<td>ì˜¤ë‹µ3</td>
 	</tr>
 	</thead>
 	<%for(ExamSelect_Dto dto : lists){
@@ -54,9 +54,9 @@
 	<thead>
 	<tr>
 		<td><input type="checkbox"></td>
-		<td>¹®Á¦³»¿ë</td>
-		<td>±×¸²</td>
-		<td>Á¤´ä¿¹½Ã</td>
+		<td>ë¬¸ì œë‚´ìš©</td>
+		<td>ê·¸ë¦¼</td>
+		<td>ì •ë‹µì˜ˆì‹œ</td>
 	</tr>
 	</thead>
 	<%for(ExamDesc_Dto dto : lists){
