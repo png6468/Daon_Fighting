@@ -60,39 +60,39 @@ public class YunController {
 		map2.put("end", 10);
 		map.put("sub_code", sub);
 		if(mean.equalsIgnoreCase("S")) {
-			List<String> list = service.searchsel1(map);
+			List<String> list = service.subGaekallsel(map);
 			ss = new String[list.size()];
 			for (int i = 0; i < list.size(); i++) {
 				ss[i] = list.get(i);
 				System.out.println(ss[i]);
 			}
 			map2.put("exa_code_", ss);
-			List<ExamSelect_Dto> lists = service.searchsel2(map2);
+			List<ExamSelect_Dto> lists = service.gaekListsel(map2);
 			model.addAttribute("lists", lists);
 			
 		}else{
 			System.out.println("여기 찍히는거니? 안찍히니? 제발");
 			if(mean.equalsIgnoreCase("D")) {
-				List<String> list = service.searchdes1(map);
+				List<String> list = service.subSesulallsel(map);
 				ss = new String[list.size()];
 				for (int i = 0; i < list.size(); i++) {
 					ss[i] = list.get(i);
 					System.out.println(ss[i]);
 				}
 				map2.put("exa_code_", ss);
-				List<ExamDesc_Dto> lists = service.searchdes2(map2);
+				List<ExamDesc_Dto> lists = service.sesulListsel(map2);
 				model.addAttribute("lists", lists);
 				
 				
 			}else if(mean.equalsIgnoreCase("P")) {
-				List<String> list = service.searchport1(map);
+				List<String> list = service.subPoexaallsel(map);
 				ss = new String[list.size()];
 				for (int i = 0; i < list.size(); i++) {
 					ss[i] = list.get(i);
 					System.out.println(ss[i]);
 				}
 				map2.put("exa_code_", ss);
-				List<ExamDesc_Dto> lists = service.searchport2(map2);
+				List<ExamDesc_Dto> lists = service.popolListsel(map2);
 				model.addAttribute("lists", lists);
 				
 			}

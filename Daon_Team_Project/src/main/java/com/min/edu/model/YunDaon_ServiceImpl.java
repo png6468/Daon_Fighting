@@ -20,39 +20,39 @@ public class YunDaon_ServiceImpl implements YunDaon_IService {
 
 	
 	@Override
-	public List<String> searchsel1(Map<Object, Object> map) {
-		List<String> list = dao.searchsel1(map);
+	public List<String> subGaekallsel(Map<Object, Object> map) {
+		List<String> list = dao.subGaekallsel(map);
 		return list;
 	}
 
 	@Override
-	public List<ExamSelect_Dto> searchsel2(Map<Object, Object> map) {
+	public List<ExamSelect_Dto> gaekListsel(Map<Object, Object> map) {
 		
-		return dao.searchsel2(map);
+		return dao.gaekListsel(map);
 	}
 
 	@Override
-	public List<String> searchdes1(Map<Object, Object> map) {
-		List<String> list = dao.searchdes1(map);
+	public List<String> subSesulallsel(Map<Object, Object> map) {
+		List<String> list = dao.subSesulallsel(map);
 		return list;
 	}
 
 	@Override
-	public List<ExamDesc_Dto> searchdes2(Map<Object, Object> map) {
+	public List<ExamDesc_Dto> sesulListsel(Map<Object, Object> map) {
 		// TODO Auto-generated method stub
-		return dao.searchdes2(map);
+		return dao.sesulListsel(map);
 	}
 
 	@Override
-	public List<String> searchport1(Map<Object, Object> map) {
-		List<String> list = dao.searchport1(map);
+	public List<String> subPoexaallsel(Map<Object, Object> map) {
+		List<String> list = dao.subPoexaallsel(map);
 		return list;
 	}
 
 	@Override
-	public List<ExamDesc_Dto> searchport2(Map<Object, Object> map) {
+	public List<ExamDesc_Dto> popolListsel(Map<Object, Object> map) {
 		// TODO Auto-generated method stub
-		return dao.searchport2(map);
+		return dao.popolListsel(map);
 	}
 	
 	

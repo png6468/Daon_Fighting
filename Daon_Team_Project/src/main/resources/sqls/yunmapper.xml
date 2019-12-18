@@ -3,13 +3,13 @@
 <mapper namespace="com.min.edu.model.YunDaon_DaoImpl.yunwoo">
 
 	<!-- 객관식 문제 조회 -->
-	<select id="searchsel1" parameterType="java.util.Map" resultType="java.lang.String">
+	<select id="subGaekallsel" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT DISTINCT(EXA_CODE) FROM D_EXAM 
    			JOIN D_CUREXA USING(EXA_CODE)
    			JOIN D_CURRICULUM USING(CUR_CODE)
       			WHERE SUB_CODE = #{sub_code} AND EXA_MEAN='S'		
 	</select>
-	<select id="searchsel2" parameterType="java.lang.String" resultType="examselectDto">
+	<select id="gaekListsel" parameterType="java.lang.String" resultType="examselectDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, COR_ANSWER, WRO_ONE, WRO_TWO, WRO_THREE 
 			FROM (SELECT EXA_CODE, CONTENT, FILENAME, COR_ANSWER, WRO_ONE, WRO_TWO, WRO_THREE, ROWNUM RN FROM D_EXAMSELECT)
                            WHERE EXA_CODE IN
@@ -18,14 +18,14 @@
 	</select>
 	
 	<!-- 서술형 문제 조회 -->
-	<select id="searchdes1" parameterType="java.util.Map" resultType="java.lang.String">
+	<select id="subSesulallsel" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT DISTINCT(EXA_CODE) FROM D_EXAM 
    			JOIN D_CUREXA USING(EXA_CODE)
    			JOIN D_CURRICULUM USING(CUR_CODE)
       			WHERE SUB_CODE = #{sub_code} AND EXA_MEAN='D'	
 	</select>
 	
-	<select id="searchdes2" parameterType="java.lang.String" resultType="examdescDto">
+	<select id="sesulListsel" parameterType="java.lang.String" resultType="examdescDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, STANDARD
         	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
                     WHERE EXA_CODE IN
@@ -36,7 +36,7 @@
 	
 	
 	<!-- 포트폴리오 문제 조회 -->
-	<select id="searchport1" parameterType="java.util.Map" resultType="java.lang.String">
+	<select id="subPoexaallsel" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT DISTINCT(EXA_CODE) FROM D_EXAM 
    			JOIN D_CUREXA USING(EXA_CODE)
    			JOIN D_CURRICULUM USING(CUR_CODE)
@@ -44,7 +44,7 @@
 	</select>
 	
 	<!-- searchdes2랑 똑같은 거 기분탓입니다. -->
-	<select id="searchport2" parameterType="java.lang.String" resultType="examdescDto">
+	<select id="popolListsel" parameterType="java.lang.String" resultType="examdescDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, STANDARD
         	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
                      WHERE EXA_CODE IN

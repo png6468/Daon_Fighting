@@ -9,11 +9,11 @@ import com.min.edu.dtos.ExamSelect_Dto;
 public interface YunDaon_IService {
 
 	
-	public List<String> searchsel1(Map<Object, Object> map);
-	public List<ExamSelect_Dto> searchsel2(Map<Object, Object> map2);
-	List<ExamDesc_Dto> searchport2(Map<Object, Object> map);
-	List<String> searchport1(Map<Object, Object> map);
-	List<ExamDesc_Dto> searchdes2(Map<Object, Object> map);
-	List<String> searchdes1(Map<Object, Object> map);
+	public List<String> subGaekallsel(Map<Object, Object> map);
+	public List<ExamSelect_Dto> gaekListsel(Map<Object, Object> map2);
+	List<ExamDesc_Dto> popolListsel(Map<Object, Object> map);
+	List<String> subPoexaallsel(Map<Object, Object> map);
+	List<ExamDesc_Dto> sesulListsel(Map<Object, Object> map);
+	List<String> subSesulallsel(Map<Object, Object> map);
 	
 }
