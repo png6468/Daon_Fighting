@@ -14,7 +14,7 @@
 			FROM (SELECT EXA_CODE, CONTENT, FILENAME, COR_ANSWER, WRO_ONE, WRO_TWO, WRO_THREE, ROWNUM RN FROM D_EXAMSELECT)
                            WHERE EXA_CODE IN
              <foreach close=")" separator="," open="(" item="exa_code" collection="exa_code_">#{exa_code}</foreach>
-             AND RN BETWEEN #{start} AND #{end}
+             AND RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
 	<!-- 서술형 문제 조회 -->
@@ -30,7 +30,7 @@
         	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
                     WHERE EXA_CODE IN
              <foreach close=")" separator="," open="(" item="exa_code" collection="exa_code_">#{exa_code}</foreach>
-             AND RN BETWEEN #{start} AND #{end}
+             AND RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
 	
@@ -43,15 +43,82 @@
       			WHERE SUB_CODE = #{sub_code} AND EXA_MEAN='P'		
 	</select>
 	
-	<!-- 위에랑 똑같은 거 기분탓입니다. -->
+	<!-- searchdes2랑 똑같은 거 기분탓입니다. -->
 	<select id="searchport2" parameterType="java.lang.String" resultType="examdescDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, STANDARD
         	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
                      WHERE EXA_CODE IN
              <foreach close=")" separator="," open="(" item="exa_code" collection="exa_code_">#{exa_code}</foreach>
-             AND RN BETWEEN #{start} AND #{end}
+             AND RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
+    <!-- 복사된 문제를 시험에 입력 -->
+    <insert id="">
+    INSERT INTO D_CUREXA
+    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
+    VALUES(CUREXA_SEQ.NEXTVAL, '1', '6', '5')
+    </insert>
+    
+    <!--문제를 시험에서 삭제-->
+    <delete id="">
+    DELETE FROM D_CUREXA WHERE EXA_CODE=#{exa_code} AND CUR_CODE = #{cur_code}
+    </delete>
+    
+    <!--내용이 없는 문제껍데기를 시험에 등록-->
+    <insert id="">
+    INSERT INTO D_CUREXA
+    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
+    VALUES(CUREXA_SEQ.NEXTVAL, '1', '1', '5')
+    </insert>
+    
+    <!--초기시험점수가 0점인 것을 위해 만들어 둔 연결 제거  	-->
+    <delete id="">
+    DELETE FROM D_CUREXA WHERE EXA_CODE='1' AND CUR_CODE = #{cur_code}
+    </delete>
+    
+    				
+    <!--객관식 유형 문제 추가-->
+    <insert id="">
+    INSERT INTO D_EXAM(EXA_CODE, EXA_MEAN) VALUES(EXAM_SEQ.NEXTVAL, 'S')
+    </insert>
+    
+    <!--객관식 문제의 내용 추가-->
+    <insert id="">
+    INSERT INTO D_EXAMSELECT
+    (SEQ, EXA_CODE, CONTENT, WRO_ONE, WRO_TWO, WRO_THREE, COR_ANSWER, FILENAME)
+    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, '객관식문제10', '오ㅓ답1', '오답2', '오답3', '정답', '첨부파일')
+    </insert>
+    
+    <!--추가된 문제를 시험에 추가-->
+    <insert id="">
+    INSERT INTO D_CUREXA
+    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
+    VALUES(CUREXA_SEQ.NEXTVAL, '1', EXAM_SEQ.CURRVAL, '5')
+    </insert>
+    
+    
+    
+    <!--서술형 유형 문제 추가-->
+    <insert id="">
+    INSERT INTO D_EXAM(EXA_CODE, EXA_MEAN) VALUES(EXAM_SEQ.NEXTVAL, 'D')
+    </insert>
+    
+    <!--서술형 문제의 내용 추가-->
+    <insert id="">
+    INSERT INTO D_EXAMDESCRIPTIVE (SEQ, EXA_CODE, CONTENT, STANDARD, FILENAME) 
+    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, '서술형문제5', '정답예시', '첨부파일')
+    </insert>
+    
+    <!--포폴형 유형 문제 추가-->
+    <insert id="">
+    INSERT INTO D_EXAM(EXA_CODE, EXA_MEAN) VALUES(EXAM_SEQ.NEXTVAL, 'P')
+    </insert>
+    
+    <!--포폴형 문제의 내용 추가-->
+    <insert id="">
+    INSERT INTO D_EXAMDESCRIPTIVE (SEQ, EXA_CODE, CONTENT, STANDARD, FILENAME) 
+    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, '포폴문제5', '정답예시', '첨부파일')
+    </insert>
 	
 	
 </mapper>

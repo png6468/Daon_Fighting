@@ -156,4 +156,15 @@ public class YunController {
 		}		 
 	 }
 	
+	
+	
+	
+	
+	@RequestMapping(value = "/makeMun.do", method = RequestMethod.POST)
+	public String makeMun(ExamSelect_Dto dto) {
+		logger.info("여기 잘 나오나요, {}", dto);
+		return "redirect:./test_domain.do";
+	}
+	
+	
 }

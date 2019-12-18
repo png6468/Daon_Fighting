@@ -32,7 +32,8 @@
 </script>
 <body>
 <!-- 객관식 문제 생성 -->
-<form action="">
+<form action="./makeMun.do" method="post">
+<input type="hidden" name="" value="">
 <table border="1">
 	<tr>
 		<td colspan="4">
@@ -41,7 +42,7 @@
 	</tr>
 	<tr>
 		<td colspan="4">
-			<textarea rows="4" cols="4" id="ckeditor"></textarea>
+			<textarea rows="4" cols="4" id="ckeditor" name="content"></textarea>
 		</td>
 	</tr>
 	<tr>
@@ -61,6 +62,12 @@
 		<td><input type="text" required="required" name="wro_one"></td>
 		<td><input type="text" required="required" name="wro_two"></td>
 		<td><input type="text" required="required" name="wro_three"></td>
+	</tr>
+	<tr>
+		<td>
+			<input type="submit" value="문제생성">
+			<input type="reset" value="초기화">
+		</td>
 	</tr>
 </table>
 </form>
