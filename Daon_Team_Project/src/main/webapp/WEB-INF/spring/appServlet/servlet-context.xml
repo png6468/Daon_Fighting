@@ -28,6 +28,9 @@
 	
 	<context:component-scan base-package="com.min.edu" />
 	
+	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+	</beans:bean>
 	
 	
 </beans:beans>
