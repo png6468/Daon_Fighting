@@ -53,72 +53,84 @@
 	</select>
 	
     <!-- 복사된 문제를 시험에 입력 -->
-    <insert id="">
+    <insert id="copyinsert" parameterType="curexaDto">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, '1', '6', '5')
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, #{exa_code}, #{allot})
     </insert>
     
     <!--문제를 시험에서 삭제-->
-    <delete id="">
+    <delete id="curexaDelete" parameterType="curexaDto">
     DELETE FROM D_CUREXA WHERE EXA_CODE=#{exa_code} AND CUR_CODE = #{cur_code}
     </delete>
     
     <!--내용이 없는 문제껍데기를 시험에 등록-->
-    <insert id="">
+    <insert id="createtest" parameterType="java.lang.String">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, '1', '1', '5')
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, '1', '0')
     </insert>
     
     <!--초기시험점수가 0점인 것을 위해 만들어 둔 연결 제거  	-->
-    <delete id="">
+    <delete id="deldefault" parameterType="java.lang.String">
     DELETE FROM D_CUREXA WHERE EXA_CODE='1' AND CUR_CODE = #{cur_code}
     </delete>
     
     				
     <!--객관식 유형 문제 추가-->
-    <insert id="">
+    <insert id="addExagaek">
     INSERT INTO D_EXAM(EXA_CODE, EXA_MEAN) VALUES(EXAM_SEQ.NEXTVAL, 'S')
     </insert>
     
     <!--객관식 문제의 내용 추가-->
-    <insert id="">
+    <insert id="gaekExacontents" parameterType="examselectDto">
     INSERT INTO D_EXAMSELECT
     (SEQ, EXA_CODE, CONTENT, WRO_ONE, WRO_TWO, WRO_THREE, COR_ANSWER, FILENAME)
-    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, '객관식문제10', '오ㅓ답1', '오답2', '오답3', '정답', '첨부파일')
+    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, #{content}, #{wro_one}, #{wro_two}, #{wro_three}, #{cor_answer}, #{filename})
     </insert>
     
     <!--추가된 문제를 시험에 추가-->
-    <insert id="">
+    <insert id="curGaekexa" parameterType="curexaDto">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, '1', EXAM_SEQ.CURRVAL, '5')
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
     </insert>
     
     
     
     <!--서술형 유형 문제 추가-->
-    <insert id="">
+    <insert id="addExasesul">
     INSERT INTO D_EXAM(EXA_CODE, EXA_MEAN) VALUES(EXAM_SEQ.NEXTVAL, 'D')
     </insert>
     
     <!--서술형 문제의 내용 추가-->
-    <insert id="">
+    <insert id="sesulExacontents" parameterType="examdescDto">
     INSERT INTO D_EXAMDESCRIPTIVE (SEQ, EXA_CODE, CONTENT, STANDARD, FILENAME) 
-    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, '서술형문제5', '정답예시', '첨부파일')
+    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, #{content}, #{standard}, #{filename})
+    </insert>
+    
+    <!--추가된 문제를 시험에 추가-->
+    <insert id="curSesulexa" parameterType="curexaDto">
+    INSERT INTO D_CUREXA
+    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
     </insert>
     
     <!--포폴형 유형 문제 추가-->
-    <insert id="">
+    <insert id="addExapopol">
     INSERT INTO D_EXAM(EXA_CODE, EXA_MEAN) VALUES(EXAM_SEQ.NEXTVAL, 'P')
     </insert>
     
     <!--포폴형 문제의 내용 추가-->
-    <insert id="">
+    <insert id="popolExacontents" parameterType="examdescDto">
     INSERT INTO D_EXAMDESCRIPTIVE (SEQ, EXA_CODE, CONTENT, STANDARD, FILENAME) 
-    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, '포폴문제5', '정답예시', '첨부파일')
+    VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, #{content}, #{standard}, #{filename})
     </insert>
 	
+	<insert id="curPopolexa" parameterType="curexaDto">
+    INSERT INTO D_CUREXA
+    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
+    </insert>
 	
 </mapper>
