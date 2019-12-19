@@ -16,6 +16,8 @@ import com.min.edu.dtos.Admin_Dto;
 @Repository
 public class ByeongDaon_DaoImpl implements ByeongDaon_IDao {
 
+	
+	
 	@Autowired
 	private SqlSessionTemplate session;
 	

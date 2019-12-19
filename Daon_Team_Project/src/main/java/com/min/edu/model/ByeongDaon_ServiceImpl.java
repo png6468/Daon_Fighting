@@ -11,6 +11,8 @@ import com.min.edu.dtos.Admin_Dto;
 @Service
 public class ByeongDaon_ServiceImpl implements ByeongDaon_IService {
 
+	
+	
 	@Autowired
 	private ByeongDaon_IDao dao;
 	

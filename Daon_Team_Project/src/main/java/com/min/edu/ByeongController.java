@@ -22,6 +22,8 @@ import com.min.edu.model.ByeongDaon_IService;
 @Controller
 public class ByeongController {
 	
+	
+	
 	private Logger logger = LoggerFactory.getLogger(ByeongController.class);
 	
 	@Autowired
