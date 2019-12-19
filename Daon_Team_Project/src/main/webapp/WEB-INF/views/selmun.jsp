@@ -25,7 +25,7 @@
 	<tr>
 		<td><input type="checkbox"></td>
 		<td>문제내용</td>
-		<td>그림</td>
+		<td>첨부파일</td>
 		<td>정답</td>
 		<td>오답1</td>
 		<td>오답2</td>
@@ -40,7 +40,11 @@
 			<input type="hidden" value="<%=dto.getExa_code()%>">
 		</td>
 		<td><%=dto.getContent()%></td>
+		<%if(dto.getFilename()==null || dto.getFilename().equalsIgnoreCase(null) || dto.getFilename().equalsIgnoreCase("null")){ %>
+		<td></td>
+		<%}else{%>
 		<td><%=dto.getFilename()%></td>
+		<%}%>
 		<td><%=dto.getCor_answer()%></td>
 		<td><%=dto.getWro_one()%></td>
 		<td><%=dto.getWro_two()%></td>
@@ -55,7 +59,7 @@
 	<tr>
 		<td><input type="checkbox"></td>
 		<td>문제내용</td>
-		<td>그림</td>
+		<td>첨부파일</td>
 		<td>정답예시</td>
 	</tr>
 	</thead>
@@ -67,7 +71,11 @@
 			<input type="hidden" value="<%=dto.getExa_code()%>">
 		</td>
 		<td><%=dto.getContent()%></td>
+		<%if(dto.getFilename()==null || dto.getFilename().equalsIgnoreCase(null) || dto.getFilename().equalsIgnoreCase("null")){ %>
+		<td></td>
+		<%}else{%>
 		<td><%=dto.getFilename()%></td>
+		<%}%>
 		<td><%=dto.getStandard()%></td>
 	</tr>
 	<% 

@@ -10,8 +10,9 @@ public interface YunDaon_IDao {
 
 	public List<String> subGaekallsel(Map<Object, Object> map);
 	public List<ExamSelect_Dto> gaekListsel(Map<Object, Object> map);
-	List<String> subSesulallsel(Map<Object, Object> map);
-	List<ExamDesc_Dto> sesulListsel(Map<Object, Object> map);
-	List<String> subPoexaallsel(Map<Object, Object> map);
-	List<ExamDesc_Dto> popolListsel(Map<Object, Object> map);
+	public List<String> subSesulallsel(Map<Object, Object> map);
+	public List<String> subPoexaallsel(Map<Object, Object> map);
+	public List<ExamDesc_Dto> sesulListsel(Map<Object, Object> map);
+	public List<ExamDesc_Dto> popolListsel(Map<Object, Object> map);
+	public String filename();
 }

@@ -61,6 +61,11 @@ public class YunDaon_DaoImpl implements YunDaon_IDao {
 		
 		return lists;
 	}
+	@Override
+	public String filename() {
+		logger.info("업로드 될 파일 이름");
+		return session.selectOne(ns+"filename");
+	}
 	
 	
 
