@@ -15,27 +15,32 @@ public class ByeongDaon_ServiceImpl implements ByeongDaon_IService {
 	private ByeongDaon_IDao dao;
 	
 	@Override
-	public String idCheckAdmin(String adm_id) {
+	public String aidCheck(String adm_id) {
 		// TODO Auto-generated method stub
-		return dao.idCheckAdmin(adm_id);
+		return dao.aidCheck(adm_id);
 	}
 
 	@Override
-	public Admin_Dto login_Admin(Map<String, String> map) {
+	public Admin_Dto loginAdbsame(Map<String, String> map) {
 		// TODO Auto-generated method stub
-		return dao.login_Admin(map);
+		return dao.loginAdbsame(map);
 	}
 
 	@Override
-	public Admin_Dto myPageAdmin(String adm_id) {
+	public Admin_Dto admDetailsel(String adm_id) {
 		// TODO Auto-generated method stub
-		return dao.myPageAdmin(adm_id);
+		return dao.admDetailsel(adm_id);
 	}
 
 	@Override
-	public List<Admin_Dto> allAdmin() {
+	public List<Admin_Dto> admAllselect() {
 		// TODO Auto-generated method stub
-		return dao.allAdmin();
+		return dao.admAllselect();
+	}
+	
+	@Override
+	public boolean admdbSave(Admin_Dto dto) {
+		return dao.admdbSave(dto);
 	}
 
 }

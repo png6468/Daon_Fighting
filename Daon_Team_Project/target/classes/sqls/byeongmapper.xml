@@ -3,26 +3,29 @@
 <mapper namespace="com.min.edu.model.ByeongDaon_DaoImpl.byeong">
 
 	<!-- 관리자 아이디 체크 -->
-	<select id="idCheckAdmin" parameterType="java.lang.String" resultType="java.lang.String">
+	<select id="aidCheck" parameterType="java.lang.String" resultType="java.lang.String">
 		SELECT COUNT(ADM_ID)  FROM D_ADMIN   WHERE ADM_ID=#{adm_id}
 	</select>
 	
 	<!-- 관리자 로그인 -->
-	<select id="login_Admin" parameterType="java.util.Map" resultType="adminDto">
+	<select id="loginAdbsame" parameterType="java.util.Map" resultType="adminDto">
 		SELECT ADM_ID, ADM_AUTH FROM D_ADMIN WHERE ADM_ID=#{adm_id} AND ADM_PW=#{adm_pw} AND ADM_DELFLAG = 'N'
 	</select>
 	
 	<!-- 관리자 마이페이지 -->
-	<select id="myPageAdmin" parameterType="java.lang.String" resultType="adminDto">
-		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN WHERE = #{adm_id}
+	<select id="admDetailsel" parameterType="java.lang.String" resultType="adminDto">
+		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG FROM D_ADMIN WHERE = #{adm_id}
 	</select>
 	
 	<!-- 모든 관리자 조회 -->
-	<select id="allAdmin" resultType="adminDto">
-		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG  FROM D_ADMIN
+	<select id="admAllselect" resultType="adminDto">
+		SELECT ADM_ID, ADM_AUTH, ADM_DELFLAG FROM D_ADMIN
 	</select>
 	
-	
+	<!-- 입력된 정보 DB 저장 관리자 (관리자 가입) -->
+	<select id="admdbSave" parameterType="adminDto">
+		INSERT INTO D_ADMIN(ADM_ID, ADM_AUTH, ADM_PW, ADM_DELFLAG) VALUES(#{adm_id}, 'T', #{adm_pw}, 'N')
+	</select>
 	
 	
 </mapper>
