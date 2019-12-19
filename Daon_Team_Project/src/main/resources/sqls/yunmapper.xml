@@ -33,8 +33,6 @@
              AND RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
-	
-	
 	<!-- 포트폴리오 문제 조회 -->
 	<select id="subPoexaallsel" parameterType="java.util.Map" resultType="java.lang.String">
 	SELECT DISTINCT(EXA_CODE) FROM D_EXAM 
@@ -75,7 +73,6 @@
     <delete id="deldefault" parameterType="java.lang.String">
     DELETE FROM D_CUREXA WHERE EXA_CODE='1' AND CUR_CODE = #{cur_code}
     </delete>
-    
     				
     <!--객관식 유형 문제 추가-->
     <insert id="addExagaek">
@@ -95,8 +92,6 @@
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
     VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
     </insert>
-    
-    
     
     <!--서술형 유형 문제 추가-->
     <insert id="addExasesul">
@@ -127,10 +122,17 @@
     VALUES(EXAM_SEQ.CURRVAL, EXAM_SEQ.CURRVAL, #{content}, #{standard}, #{filename})
     </insert>
 	
+	<!--추가된 문제를 시험에 추가-->
 	<insert id="curPopolexa" parameterType="curexaDto">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
     VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
     </insert>
+    
+    <!-- 파일 업로드 시 파일의 이름 정하는 코드 -->
+    <select id="filename" resultType="java.lang.String">
+    SELECT FILESEQ.NEXTVAL FROM DUAL
+    </select>
+    
 	
 </mapper>
