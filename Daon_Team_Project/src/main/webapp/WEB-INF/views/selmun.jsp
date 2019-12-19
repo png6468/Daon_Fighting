@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+
+</script>
 <body>
 
 <% 
@@ -23,7 +26,7 @@
 	%>
 	<thead>
 	<tr>
-		<td><input type="checkbox"></td>
+		<td>선택</td>
 		<td>문제내용</td>
 		<td>첨부파일</td>
 		<td>정답</td>
@@ -57,7 +60,7 @@
 	%>
 	<thead>
 	<tr>
-		<td><input type="checkbox"></td>
+		<td>선택</td>
 		<td>문제내용</td>
 		<td>첨부파일</td>
 		<td>정답예시</td>
