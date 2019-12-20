@@ -44,9 +44,9 @@ public class WanDaon_DaoImpl implements WanDaon_IDao {
 	}
 
 	@Override
-	public AnswerScore_Dto answerSsp(Map<String, String> map) {
+	public List<AnswerScore_Dto> answerSsp(Map<String, String> map) {
 		logger.info("answerSsp 학생의정답조회 주관식/포폴!!");
-		return (AnswerScore_Dto) session.selectList(NS+"answerSsp", map);
+		return  session.selectList(NS+"answerSsp", map);
 		
 	}
 

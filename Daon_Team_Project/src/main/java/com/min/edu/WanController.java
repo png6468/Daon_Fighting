@@ -2,8 +2,10 @@ package com.min.edu;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.min.edu.dtos.AnswerScore_Dto;
 import com.min.edu.dtos.Course_Dto;
 import com.min.edu.dtos.DescPortSel_Dto;
 import com.min.edu.dtos.Exam_Dto;
@@ -47,7 +50,14 @@ public class WanController {
 	}
 	
 	@RequestMapping(value="/jungdabstu.do", method=RequestMethod.GET)
-	public String jungdabstu() {
+	public String jungdabstu(Model model,String exa_code, String stu_id) {
+		logger.info("〓〓〓〓〓〓〓〓〓 jungdabstu.do 컨트롤러 나오나요??〓〓〓〓〓〓〓〓");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("exa_code", "1");
+		map.put("stu_id", "qwer");
+		System.out.println("이거 맵 나오나요?? : "+ map);
+		List<AnswerScore_Dto> lists = service.answerSsp(map);
+		model.addAttribute("lists", lists);
 		return "jungdabstu";
 	}
 

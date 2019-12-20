@@ -33,8 +33,8 @@ public class WanDaon_ServiceImpl implements WanDaon_IService {
 	}
 
 	@Override
-	public AnswerScore_Dto answerSsp(Map<String, String> map) {
-		AnswerScore_Dto dto =dao.answerSsp(map);
+	public List<AnswerScore_Dto> answerSsp(Map<String, String> map) {
+		List<AnswerScore_Dto> dto =dao.answerSsp(map);
 		return dto;
 	}
 
