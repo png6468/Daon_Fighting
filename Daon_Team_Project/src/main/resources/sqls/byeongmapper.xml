@@ -6,7 +6,7 @@
 
 	<!-- 관리자 아이디 체크 -->
 	<select id="aidCheck" parameterType="java.lang.String" resultType="java.lang.String">
-		SELECT COUNT(ADM_ID)  FROM D_ADMIN   WHERE ADM_ID=#{adm_id}
+		SELECT COUNT(ADM_ID) FROM D_ADMIN   WHERE ADM_ID=#{adm_id}
 	</select>
 	
 	<!-- 관리자 로그인 -->

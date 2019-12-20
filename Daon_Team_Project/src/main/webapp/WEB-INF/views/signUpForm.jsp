@@ -7,71 +7,59 @@
 <title>관리자 가입</title>
 </head>
 <script type="text/javascript">
-function check(){
-	var id=document.getElementById("id").value;
-	var pw=document.getElementById("password").value;
-	var passwordchk=document.getElementById("passwordchk").value;
-	var chkId = document.getElementById("chkval").value;
-	var frm = document.frm;
-	
-	if(pw !=passwordchk){
-		swal("가입 오류", "비밀번호를 확인하세요.");
-		return false;
-	}else if(chkId == "0"){
-		swal("가입 오류", "ID를 확인하세요.");
-		return false;
-	}else{
-		return true;
+function idConfirm(){
+	var obj = document.getElementsByName("id")[0];
+	if(obj.title=="n"){
+		alert("아이디 중복 확인을 실행하세요.");
+		obj.focus();
 	}
 }
 
-$(document).ready(function(){
-	$("#id").keyup(function(){
-		var inputLength=$(this).val().length;
-		var id="";
-		id=$(this).val();
-		if(id.indexOf(" ") != -1){
-			$("#result").html("공백은 사용할 수 없습니다.");
-			$("#chkbal").val("0");
-		}else if(inputLength){
-			jQuery.ajax({
-				type:"post",
-				url:"./idCheck.do",
-				data:"id="+$(this).val(),
-				async:true,
-				success:function(msg){
-					if(msg.isc=="true"){
-						$("#chkval").val("1");
-						$("#result").html("사용 가능한 ID입니다.");
-					}else{
-						$("chkval").val("0");
-						$("#result").html("사용 불가능한 ID입니다.");
-					}
-				},
-				error : function(){alert("오류");}
-			});
-		}else{
-			$("#chkval").val("0");
-		}
-	});
-});
+function idChk(){
+	var id=document.getElementById("id").value;
+	if(id=="" || id==null){
+		var id = document.getElementById("id").focus();
+		alert("ID를 입력하세요.");
+	}else{
+		var url="./idCheck.do?id="+id;
+		var title="중복 확인";
+		var prop="width=500px, height=500px";
+		open(url, title, prop);
+	}
+}
 
 </script>
 <body>
-	<input type="hidden" id="chkval" value="0">
-	<form action="./signUp.do" method="post" id="frm" name="frm" onsubmit="return check()">
-		<div id="info">
+	<form action="./signUp.do" method="post">
+	<table>
 			<div id="leftInfo">관리자 가입</div>
-			<div id="centerInfo">
-				<input type="text" id="id" name="id" placeholder="ID를  입력하세요." required="required"><br>
-				<input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." required="required"><br>
+			
+			<tr>
+				<th>ID</th>
+				<td>
+				<input type="text" title="n" name="adm_id" id="id" placeholder="ID를  입력하세요.">
+				<input type="button" value="중복 확인" onclick="idChk()" required="required"><br>
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td>
+				<input type="password" name="password" onclick="idConfirm()" placeholder="비밀번호를 입력하세요." required="required"><br>
+				</td>
+			</tr>
+			<tr>
+				<th>비밀번호 확인</th>
+				<td>
 				<input type="password" id="passwordchk" placeholder="비밀번호를 한번 더 입력하세요." required="required"><br>
-			</div>
-			<div id="button">
-				<input class="btn btn-success" type="submit" value="가입완료">
-				<input class="btn btn-primary" type="button" value="돌아가기" onclick="history.back(-1)">
-			</div>
-		</div>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="3">
+				<input type="submit" value="관리자 가입" onsubmit="idChk()">
+				<input type="button" value="돌아가기" onclick="history.back(-1)">
+				</th>
+			</tr>
+			</table>
 	</form>
 	
 	

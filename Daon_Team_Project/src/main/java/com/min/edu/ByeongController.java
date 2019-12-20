@@ -38,18 +38,20 @@ public class ByeongController {
 	}
 	
 	@RequestMapping(value = "/loginAdbsame.do", method = RequestMethod.POST)
-	public String loginAdbsame(String adm_id, String adm_pw, HttpSession session) {
-		logger.info("관리자 로그인 아이디{}, 비밀번호{}",adm_id,adm_pw);
+	public String loginAdbsame(Admin_Dto dto, HttpSession session) {
+		logger.info("관리자 로그인 아이디{}, 비밀번호{}", dto);
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("adm_id", adm_id);
-		map.put("adm_pw", adm_pw);
+		map.put("adm_id", dto.getAdm_id());
+		map.put("adm_pw", dto.getAdm_pw());
 		
-		Admin_Dto dto = service.loginAdbsame(map);
+		Admin_Dto mdto = service.loginAdbsame(map);
+		if(mdto !=null) {
+			session.setAttribute("ADto", mdto);
+		}else {
+			return "redirect:/admin_login.do";
+		}
 		
-		System.out.println(dto);
-		
-		session.setAttribute("dto", dto);
 		
 		return "Main_admin";
 	}
@@ -76,26 +78,30 @@ public class ByeongController {
 		return map;
 	}
 	
-	@RequestMapping(value="/signUpForm.do", method = RequestMethod.GET)
-	public String signUpForm() {
-		return "signUpForm";	
-	}
+	/*
+	 * @RequestMapping(value="/signUpForm.do", method = RequestMethod.GET) public
+	 * String signUpForm() { return "signUpForm"; }
+	 */
 	
-	@RequestMapping(value="/idCheck.do", method=RequestMethod.POST)
-	@ResponseBody
+	@RequestMapping(value="/idCheck.do", method=RequestMethod.GET)
 	public String aidCheck(Model model, String adm_id){
-		String idchk = service.aidCheck(adm_id);
-		model.addAttribute("isc", idchk==null?true:false);
+		String idChk = service.aidCheck(adm_id);
+		model.addAttribute("isc", idChk==null?true:false);
 		return "idCheck";
 	}
 	
-	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
-	public String signUp(Admin_Dto dto, @RequestParam("password") String adm_pw) {
-		dto.setAdm_pw(adm_pw);
-		boolean isc = service.admdbSave(dto);
-		return isc?"redirect:/login_Admin.do":"redirect:/signUpForm.do";
+	@RequestMapping(value="/signUp.do", method=RequestMethod.GET)
+	public String signUp() {
+		
+		return "signUpForm";
 	}
 	
+	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
+	public String singUp(Admin_Dto dto) {
+		boolean isc = service.admdbSave(dto);
+		return isc?"redirect:/admin_login.do":"redirect:/signUp.do";
+		
+	}
 	
 	
 }

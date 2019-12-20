@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%
+	Object obj = session.getAttribute("ADto");
+	Admin_Dto adto = (Admin_Dto)obj;
+%>
+
 <body>
 <%@include file="/WEB-INF/views/adm_header.jsp"%>
 <a href="www.naver.com">야 잘 나오냐?!</a>
