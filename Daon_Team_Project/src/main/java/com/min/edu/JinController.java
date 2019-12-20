@@ -31,32 +31,65 @@ public class JinController {
 	@RequestMapping(value = "/sijak.do", method = RequestMethod.GET)
 	public String jintest() {
 		logger.info("시작페이지 이동");
-		return "gwajungmain";
+		return "Course_List";
 	}
 
-	@RequestMapping(value = "/Course_List.do", method = RequestMethod.GET)
-	public String CourseList(Paging_Dto dto, Model model) {
+	@RequestMapping(value = "/insertCouForm.do", method = RequestMethod.GET)
+	public String Make_Course() {
+		logger.info("insertCouForm.do:{}", new Date());
+		return "insertCourseForm";
+	}
+
+	@RequestMapping(value = "/iselCourse.do", method = RequestMethod.GET)
+	public String iselCourseList(Paging_Dto dto, Model model) {
 		logger.info("현재 진행중인 전체 과정 조회");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("startList", "1");
 		map.put("endList", "5");
 		List<Course_Dto> lists = service.iselCourse(map);
 		model.addAttribute("lists", lists);
-		return "Course_List";
+		return "iselCourse_List";
 	}
 
-	@RequestMapping(value = "/insertCouForm.do",method = RequestMethod.GET)
-	public String Make_Course() {
-			logger.info("insertCouForm.do:{}",new Date());
-		return "insertCourseForm";
+	@RequestMapping(value = "/bselCourse.do", method = RequestMethod.GET)
+	public String bselCourseList(Model model, Course_Dto dto) {
+		logger.info("종료된 전체 과정 조회");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startList", "1");
+		map.put("endList", "5");
+		List<Course_Dto> lists = service.bselCourse(map);
+		model.addAttribute("lists", lists);
+		return "bselCourse_List";
 	}
 
-	@RequestMapping(value = "/insert_Course.do",method = RequestMethod.POST)
-	public String insert_Course(Course_Dto dto,HttpSession session) {
+	@RequestMapping(value = "/wselCourse.do", method = RequestMethod.GET)
+	public String wselCourseList(Model model, Course_Dto dto) {
+		logger.info("예정된 전체 과정 조회");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startList", "1");
+		map.put("endList", "5");
+		List<Course_Dto> lists = service.wselCourse(map);
+		model.addAttribute("lists", lists);
+		return "wselCourse_List";
+	}
+
+	@RequestMapping(value = "/insert_Course.do", method = RequestMethod.POST)
+	public String insert_Course(Course_Dto dto, HttpSession session) {
 		logger.info("insertCourse 가 들어 옵니다");
-		Course_Dto Cdto = (Course_Dto)session.getAttribute("mem");
-			dto.setCou_code(Cdto.getCou_cnt());
+		Course_Dto Cdto = (Course_Dto) session.getAttribute("mem");
+		dto.setCou_code(Cdto.getCou_cnt());
 		boolean isc = service.insertCourse(dto);
-		return isc?"redirect:/insertCourse":"redirect:/gwajungmain";
+		System.out.println(isc + "는 뭘까요?");
+		System.out.println(dto + "얘는 뭘까요??");
+		return isc ? "redirect:/insertCourse" : "redirect:/gwajungmain";
 	}
+
+	@RequestMapping(value = "/detailCou.do",method = RequestMethod.GET)
+	public String dCourse(HttpSession session, String cou_code) {
+		logger.info("detailCourse가들어가는중,{}");
+		Course_Dto cdto = service.detailCourse(cou_code);
+		session.setAttribute("cdto", cdto);
+		return "detailCourse";
+	}
+
 }
