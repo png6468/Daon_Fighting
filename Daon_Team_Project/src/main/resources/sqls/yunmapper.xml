@@ -11,10 +11,10 @@
 	</select>
 	<select id="gaekListsel" parameterType="java.lang.String" resultType="examselectDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, COR_ANSWER, WRO_ONE, WRO_TWO, WRO_THREE 
-			FROM (SELECT EXA_CODE, CONTENT, FILENAME, COR_ANSWER, WRO_ONE, WRO_TWO, WRO_THREE, ROWNUM RN FROM D_EXAMSELECT)
+			FROM (SELECT EXA_CODE, CONTENT, FILENAME, COR_ANSWER, WRO_ONE, WRO_TWO, WRO_THREE, ROWNUM RN FROM D_EXAMSELECT
                            WHERE EXA_CODE IN
              <foreach close=")" separator="," open="(" item="exa_code" collection="exa_code_">#{exa_code}</foreach>
-             AND RN BETWEEN #{startList} AND #{endList}
+             ) WHERE RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
 	<!-- 서술형 문제 조회 -->
@@ -27,10 +27,10 @@
 	
 	<select id="sesulListsel" parameterType="java.lang.String" resultType="examdescDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, STANDARD
-        	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
+        	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE
                     WHERE EXA_CODE IN
              <foreach close=")" separator="," open="(" item="exa_code" collection="exa_code_">#{exa_code}</foreach>
-             AND RN BETWEEN #{startList} AND #{endList}
+             ) WHERE RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
 	<!-- 포트폴리오 문제 조회 -->
@@ -44,10 +44,10 @@
 	<!-- searchdes2랑 똑같은 거 기분탓입니다. -->
 	<select id="popolListsel" parameterType="java.lang.String" resultType="examdescDto">
 		SELECT EXA_CODE, CONTENT, FILENAME, STANDARD
-        	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
+        	FROM(SELECT EXA_CODE, CONTENT, FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE
                      WHERE EXA_CODE IN
              <foreach close=")" separator="," open="(" item="exa_code" collection="exa_code_">#{exa_code}</foreach>
-             AND RN BETWEEN #{startList} AND #{endList}
+             ) WHERE RN BETWEEN #{startList} AND #{endList}
 	</select>
 	
     <!-- 복사된 문제를 시험에 입력 -->

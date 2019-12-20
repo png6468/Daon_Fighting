@@ -132,7 +132,7 @@ public class YunDaon_DaoImpl implements YunDaon_IDao {
 	public boolean addExapopol() {
 		// TODO Auto-generated method stub
 		logger.info("포폴형 유형 문제 추가");
-		int n = session.insert(ns);
+		int n = session.insert(ns+"addExapopol");
 		return n>0?true:false;
 	}
 	@Override

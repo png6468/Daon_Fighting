@@ -34,18 +34,29 @@ form {
 	$(function() {
 		CKEDITOR.replace('ckeditor3', {
 			width : "100%",
-			height : "200px",
+			height : "300px",
 			filebrowserUploadUrl : "./imgUp.do"
 		});
 	});
 	
 	//미리보기
-	function LoadImg(v) {
+	function LoadImg1(v) {
 		if (v.files && v.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				$("#LoadedImg").attr('src', e.target.result);
-				$("#LoadedImg").attr('width', "200");
+				$("#LoadedImg1").attr('src', e.target.result);
+				$("#LoadedImg1").attr('width', "200");
+			}
+			reader.readAsDataURL(v.files[0]);
+		}
+	}
+	//미리보기
+	function LoadImg2(v) {
+		if (v.files && v.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#LoadedImg2").attr('src', e.target.result);
+				$("#LoadedImg2").attr('width', "200");
 			}
 			reader.readAsDataURL(v.files[0]);
 		}
@@ -72,8 +83,10 @@ form {
 					var input = document.getElementById("hiddenval");
 					if(msg.trim()=="D"){
 						input.value="D";
+						frm2.action="./makeMun2.do";
 					}else{
 						input.value="P";
+						frm2.action="./makeMun3.do";
 					}
 					frm2.style.visibility="visible";
 					frm1.style.visibility="hidden";
@@ -93,15 +106,17 @@ form {
 	<option value="P">포트폴리오</option>
 </select>
 
-<input type="hidden" name="sub_code" value="">
-<input type="hidden" name="cur_code" value="">
 <form action="./makeMun1.do" method="post" name="munsel" class="put" enctype="multipart/form-data">
+<input type="hidden" name="sub_code" value="1">
+<input type="hidden" name="cur_code" value="1">
 <input type="hidden" name="mean" value="S">
 <table border="1">
 	<tr>
-		<td colspan="4">
-			<p>내용</p>
+		<td colspan="2">
+			내용
 		</td>
+		<td colspan="1">점수</td>
+		<td colspan="1"><input type="text" name="allot"></td>
 	</tr>
 	<tr>
 		<td colspan="4">
@@ -109,10 +124,10 @@ form {
 		</td>
 	</tr>
 	<tr>
-		<td colspan="4">파일<input type="file" name="file" id="file" onchange="LoadImg(this)"></td>
+		<td colspan="4">파일<input type="file" name="file" id="file" onchange="LoadImg1(this)"></td>
 	</tr>
 	<tr>
-		<td colspan="4"><img id="LoadedImg"></td>
+		<td colspan="4"><img id="LoadedImg1"></td>
 	</tr>
 	<tr >
 		<td>정답</td>
@@ -131,13 +146,17 @@ form {
 	<input type="reset" value="초기화">
 	<input type="button" onclick="history.back(-1)" value="뒤로가기">
 </form>
-<form action="./makeMun2.do" method="post" name="munsel" class="put" enctype="multipart/form-data">
+<form method="post" id="desc" class="put" enctype="multipart/form-data">
+<input type="hidden" name="sub_code" value="1">
+<input type="hidden" name="cur_code" value="1">
 <input type="hidden" id="hiddenval" name="mean">
 <table border="1">
 	<tr>
-		<td colspan="4">
-			<p>내용</p>
+		<td colspan="2">
+			내용
 		</td>
+		<td colspan="1">점수</td>
+		<td colspan="1"><input type="text" name="allot"></td>
 	</tr>
 	<tr>
 		<td colspan="4">
@@ -145,16 +164,16 @@ form {
 		</td>
 	</tr>
 	<tr>
-		<td colspan="4">파일<input type="file" name="file" id="file" onchange="LoadImg(this)"></td>
+		<td colspan="4">파일<input type="file" name="file" id="file" onchange="LoadImg2(this)"></td>
 	</tr>
 	<tr>
-		<td colspan="4"><img id="LoadedImg"></td>
+		<td colspan="4"><img id="LoadedImg2"></td>
 	</tr>
 	<tr>
-		<td>정답</td>
+		<td colspan="4">정답</td>
 	</tr>
 	<tr>
-		<td><textarea rows="4" cols="4" id="ckeditor3" name="standard"></textarea></td>
+		<td colspan="4"><textarea rows="4" cols="4" id="ckeditor3" name="standard"></textarea></td>
 	</tr>
 </table>
 	<input type="submit" value="문제생성">

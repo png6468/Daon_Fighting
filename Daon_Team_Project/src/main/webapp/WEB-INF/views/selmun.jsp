@@ -11,14 +11,29 @@
 <title>Insert title here</title>
 </head>
 <script type="text/javascript">
-
+	function gosel(){
+		var sub = document.getElementById("sub").value;
+		location.href="./munlist.do?mean=S&sub="+sub;
+	}
+	function godesc(){
+		var sub = document.getElementById("sub").value;
+		location.href="./munlist.do?mean=D&sub="+sub;
+	}
+	function goport(){
+		var sub = document.getElementById("sub").value;
+		location.href="./munlist.do?mean=P&sub="+sub;
+	}
 </script>
 <body>
 
 <% 
 	String mean = (String)request.getAttribute("mean");
+	String sub = (String)request.getAttribute("sub");
 %>
-<h1>여기 오냐?</h1>
+<input type="button" value="객관식 문제" onclick="gosel()">
+<input type="button" value="주관식 문제" onclick="godesc()">
+<input type="button" value="포트폴리오형 문제" onclick="goport()">
+<input type="hidden" id="sub" value="<%=sub%>">
 <table border="1">
 	<%
 	if(mean.equalsIgnoreCase("S")){
@@ -86,5 +101,6 @@
 	}
 	%>
 </table>
+<input type="button" value="뒤로가기" onclick="location.href='./test_domain.do';">
 </body>
 </html>

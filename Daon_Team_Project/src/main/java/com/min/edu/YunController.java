@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
 import com.google.gson.JsonObject;
+import com.min.edu.dtos.CurExa_Dto;
 import com.min.edu.dtos.ExamDesc_Dto;
 import com.min.edu.dtos.ExamSelect_Dto;
 import com.min.edu.model.YunDaon_IDao;
@@ -107,7 +108,7 @@ public class YunController {
 		
 		
 		model.addAttribute("mean", mean);
-		
+		model.addAttribute("sub", sub);
 		return "selmun";
 	}
 	
@@ -220,24 +221,54 @@ public class YunController {
 	}
 	
 	@RequestMapping(value = "/makeMun1.do", method = RequestMethod.POST)
-	public String makeMun1(ExamSelect_Dto dto, String sub_code, String cur_code, MultipartFile file, HttpServletRequest request) throws Exception, IOException {
-		logger.info("여기 잘 나오나요, {}", dto);
-			String path = request.getSession().getServletContext().getRealPath("/image/");
-			String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-			String filename = service.filename()+"."+extension;
-			File saveFile = new File(path + filename);
-			file.transferTo(saveFile);
-			dto.setFilename(filename);
-			
+	public String makeMun1(ExamSelect_Dto seldto, CurExa_Dto curdto, String sub_code, MultipartFile file, HttpServletRequest request) throws Exception, IOException {
+		logger.info("여기 잘 나오나요, {}, {}", seldto, curdto);
+		String path = request.getSession().getServletContext().getRealPath("/image/");
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+			if(extension.equalsIgnoreCase("")) {
+				seldto.setFilename(" ");
+			}else {				
+				String filename = service.filename()+"."+extension;
+				File saveFile = new File(path + filename);
+				file.transferTo(saveFile);
+				seldto.setFilename(filename);
+			}
+			service.addselect(seldto, curdto);
 			
 		
 		return "redirect:./test_domain.do";
 	}
 	
 	@RequestMapping(value = "/makeMun2.do", method = RequestMethod.POST)
-	public String makeMun2(ExamDesc_Dto dto, String sub_code, String cur_code) {
-		logger.info("여기 잘 나오나요, {}", dto);
-		System.out.println(dto.getFilename());
+	public String makeMun2(ExamDesc_Dto desdto, CurExa_Dto curdto, String sub_code, MultipartFile file, HttpServletRequest request) throws Exception, IOException {
+		logger.info("여기 잘 나오나요, {}", desdto);
+		String path = request.getSession().getServletContext().getRealPath("/image/");
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+		if(extension.equalsIgnoreCase("")) {
+			desdto.setFilename(" ");
+		}else {
+			String filename = service.filename()+"."+extension;
+			File saveFile = new File(path + filename);
+			file.transferTo(saveFile);
+			desdto.setFilename(filename);
+		}
+		service.adddesc(desdto, curdto);
+		return "redirect:./test_domain.do";
+	}
+	@RequestMapping(value = "/makeMun3.do", method = RequestMethod.POST)
+	public String makeMun3(ExamDesc_Dto desdto, CurExa_Dto curdto, String sub_code, MultipartFile file, HttpServletRequest request) throws Exception, IOException {
+		logger.info("여기 잘 나오나요, {}", desdto);
+		String path = request.getSession().getServletContext().getRealPath("/image/");
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+		if(extension.equalsIgnoreCase("")) {
+			desdto.setFilename(" ");
+		}else {
+			String filename = service.filename()+"."+extension;
+			File saveFile = new File(path + filename);
+			file.transferTo(saveFile);
+			desdto.setFilename(filename);
+		}
+		service.addport(desdto, curdto);
 		return "redirect:./test_domain.do";
 	}
 	
