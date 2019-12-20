@@ -1,6 +1,7 @@
 package com.min.edu.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +20,13 @@ public class NamDaon_ServiceImpl implements NamDaon_IService {
 	private Logger logger = LoggerFactory.getLogger(NamDaon_ServiceImpl.class);
 	
 	@Override
-	public List<SelectSel_Dto> gaekExasel(String cur_code) {
+	public List<SelectSel_Dto> gaekExasel(Map<Object, Object> cur_code) {
 		logger.info("gaekExasel 실행!!");
 		return dao.gaekExasel(cur_code);
 	}
 
 	@Override
-	public List<DescPortSel_Dto> sesulExasel(String cur_code) {
+	public List<DescPortSel_Dto> sesulExasel(Map<Object, Object> cur_code) {
 		logger.info("sesulExasel 실행!!");
 		return dao.sesulExasel(cur_code);
 	}

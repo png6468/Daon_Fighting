@@ -3,20 +3,22 @@
 <mapper namespace="com.min.edu.model.NamDaon_DaoImpl.namgyu">
 
 <!-- 객관식 문제 조회(학생이 문제 풀때) -->
-<select id="gaekExasel" parameterType="java.lang.String" resultType="selectselDto">
+<select id="gaekExasel" parameterType="java.util.Map" resultType="selectselDto">
 SELECT EXA_CODE, CUREXA_CODE, CUR_CODE, CONTENT, COR_ANSWER, FILENAME, WRO_ONE, WRO_TWO, WRO_THREE 
 	FROM D_CUREXA JOIN D_EXAM USING(EXA_CODE)
    					JOIN D_EXAMSELECT USING(EXA_CODE)
       WHERE EXA_MEAN = 'S' AND CUR_CODE =#{cur_code}
 </select>
-
 <!-- 서술형 문제 조회(학생이 문제 풀때) -->
-<select id="sesulExasel" parameterType="java.lang.String" resultType="descportselDto">
+<select id="sesulExasel" parameterType="java.util.Map" resultType="descportselDto">
 SELECT EXA_CODE, CUREXA_CODE, CUR_CODE, CONTENT,  FILENAME,STANDARD 
 	FROM D_CUREXA JOIN D_EXAM USING(EXA_CODE) 
 	JOIN D_EXAMDESCRIPTIVE USING(EXA_CODE)
 		WHERE EXA_MEAN = 'D' AND CUR_CODE =#{cur_code}
 </select>
+
+
+
 
 
 </mapper>

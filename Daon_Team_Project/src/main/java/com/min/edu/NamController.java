@@ -28,22 +28,27 @@ public class NamController {
 	private NamDaon_IService service;
 	
 	@RequestMapping(value = "/Poolgi.do", method = RequestMethod.GET)
-	public String moonjepoolgi(String cur_code, Model model, String sub_name) {
-		logger.info("moonjepoolgi");
-		System.out.println(cur_code);
-		System.out.println(sub_name);
-		List<SelectSel_Dto> listS = service.gaekExasel(cur_code);
-		System.out.println("객관식 curcode 뜨나?"+listS);
-		List<DescPortSel_Dto> listD = service.sesulExasel(cur_code);
-		System.out.println("서술형 curcode 뜨나?"+listD);	
-		model.addAttribute("lists", listS);
-		model.addAttribute("lists", listD);
-		model.addAttribute("sub_name", sub_name);
+	public String moonjepoolgi(String cur, Model model,String mean) {
+		logger.info("moonjepoolgi, {}",mean);
+		System.out.println("여기가 cur"+cur);
+		System.out.println(mean);
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		map.put("cur_code", cur);
+		if (mean.equalsIgnoreCase("S")) {
+			List<SelectSel_Dto> listS = service.gaekExasel(map);			
+			System.out.println("객관식 curcode 뜨나?"+listS);
+			model.addAttribute("listS", listS);
+		}else {
+			List<DescPortSel_Dto> listD = service.sesulExasel(map);
+			System.out.println("서술형 curcode 뜨나?"+listD);
+			model.addAttribute("listD", listD);
+		}
+		model.addAttribute("mean",mean);
 		return "Poolgi";
 	}
 	
-	@RequestMapping(value = "/jechool.do", method = RequestMethod.GET)
-	public String jechool() {
+	@RequestMapping(value = "/jechool.do", method = RequestMethod.POST)
+	public String jechool(String cur_code) {
 		logger.info("제출 성공해써");
 		return "Course_List";
 	}
