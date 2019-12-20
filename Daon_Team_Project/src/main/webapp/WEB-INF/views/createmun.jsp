@@ -95,7 +95,7 @@ form {
 
 <input type="hidden" name="sub_code" value="">
 <input type="hidden" name="cur_code" value="">
-<form action="./makeMun1.do" method="post" name="munsel" class="put">
+<form action="./makeMun1.do" method="post" name="munsel" class="put" enctype="multipart/form-data">
 <input type="hidden" name="mean" value="S">
 <table border="1">
 	<tr>
@@ -131,7 +131,7 @@ form {
 	<input type="reset" value="초기화">
 	<input type="button" onclick="history.back(-1)" value="뒤로가기">
 </form>
-<form action="./makeMun2.do" method="post" name="munsel" class="put">
+<form action="./makeMun2.do" method="post" name="munsel" class="put" enctype="multipart/form-data">
 <input type="hidden" id="hiddenval" name="mean">
 <table border="1">
 	<tr>

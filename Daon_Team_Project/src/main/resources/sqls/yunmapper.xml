@@ -62,13 +62,6 @@
     DELETE FROM D_CUREXA WHERE EXA_CODE=#{exa_code} AND CUR_CODE = #{cur_code}
     </delete>
     
-    <!--내용이 없는 문제껍데기를 시험에 등록-->
-    <insert id="createtest" parameterType="java.lang.String">
-    INSERT INTO D_CUREXA
-    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, '1', '0')
-    </insert>
-    
     <!--초기시험점수가 0점인 것을 위해 만들어 둔 연결 제거  	-->
     <delete id="deldefault" parameterType="java.lang.String">
     DELETE FROM D_CUREXA WHERE EXA_CODE='1' AND CUR_CODE = #{cur_code}

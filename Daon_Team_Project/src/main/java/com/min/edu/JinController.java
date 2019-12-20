@@ -1,8 +1,11 @@
 package com.min.edu;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,19 +22,19 @@ import com.min.edu.model.JinDaon_IService;
 
 @Controller
 public class JinController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(JinController.class);
-	
+
 	@Autowired
 	private JinDaon_IService service;
-	
+
 	@RequestMapping(value = "/sijak.do", method = RequestMethod.GET)
 	public String jintest() {
 		logger.info("시작페이지 이동");
 		return "gwajungmain";
 	}
-	
-	@RequestMapping(value = "/Course_List.do",method = RequestMethod.GET)
+
+	@RequestMapping(value = "/Course_List.do", method = RequestMethod.GET)
 	public String CourseList(Paging_Dto dto, Model model) {
 		logger.info("현재 진행중인 전체 과정 조회");
 		Map<String, String> map = new HashMap<String, String>();
@@ -41,5 +44,19 @@ public class JinController {
 		model.addAttribute("lists", lists);
 		return "Course_List";
 	}
-	
+
+	@RequestMapping(value = "/insertCouForm.do",method = RequestMethod.GET)
+	public String Make_Course() {
+			logger.info("insertCouForm.do:{}",new Date());
+		return "insertCourseForm";
+	}
+
+	@RequestMapping(value = "/insert_Course.do",method = RequestMethod.POST)
+	public String insert_Course(Course_Dto dto,HttpSession session) {
+		logger.info("insertCourse 가 들어 옵니다");
+		Course_Dto Cdto = (Course_Dto)session.getAttribute("mem");
+			dto.setCou_code(Cdto.getCou_cnt());
+		boolean isc = service.insertCourse(dto);
+		return isc?"redirect:/insertCourse":"redirect:/gwajungmain";
+	}
 }

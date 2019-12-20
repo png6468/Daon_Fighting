@@ -3,6 +3,7 @@ package com.min.edu.model;
 import java.util.List;
 import java.util.Map;
 
+import com.min.edu.dtos.CurExa_Dto;
 import com.min.edu.dtos.ExamDesc_Dto;
 import com.min.edu.dtos.ExamSelect_Dto;
 
@@ -16,5 +17,14 @@ public interface YunDaon_IService {
 	public List<ExamDesc_Dto> sesulListsel(Map<Object, Object> map);
 	public List<String> subSesulallsel(Map<Object, Object> map);
 	public String filename();
+	
+	public boolean copyinsert(CurExa_Dto dto);
+	public boolean addselect(ExamSelect_Dto seldto, CurExa_Dto curdto);
+	public boolean adddesc(ExamDesc_Dto desdto, CurExa_Dto curdto);
+	public boolean deldefault(String cur_code);
+	public boolean addport(ExamDesc_Dto desdto, CurExa_Dto curdto);
+	
+	
+	
 	
 }

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sound.midi.MidiDevice.Info;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +127,10 @@ public class YunController {
 		 OutputStream out = null;
 		 PrintWriter printWriter = null;
 		 JsonObject json = new JsonObject();
-		 String fileName = upload.getOriginalFilename();
+		 
+		 String extension = FilenameUtils.getExtension(upload.getOriginalFilename());
+		 String fileName = service.filename()+"."+extension;
+		 System.out.println(extension);
 //		 int pos = fileName.lastIndexOf(".");
 //		 String _fileName = fileName.substring(0, pos);
 //		 System.out.println("파일 확장자만 줘바"+_fileName);
@@ -174,6 +178,7 @@ public class YunController {
 		logger.info("upload 실행 제발!");
 		String path = request.getSession().getServletContext().getRealPath("/image/");
 		String filename = picFile.getOriginalFilename();
+		String extension = FilenameUtils.getExtension(picFile.getOriginalFilename()); //확장자명만 받는거임
 		/* dto.setFilename(filename); */
 
 		File saveFile = new File(path + filename);
@@ -218,11 +223,13 @@ public class YunController {
 	public String makeMun1(ExamSelect_Dto dto, String sub_code, String cur_code, MultipartFile file, HttpServletRequest request) throws Exception, IOException {
 		logger.info("여기 잘 나오나요, {}", dto);
 			String path = request.getSession().getServletContext().getRealPath("/image/");
-			String filename = file.getOriginalFilename();
-			
+			String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+			String filename = service.filename()+"."+extension;
 			File saveFile = new File(path + filename);
 			file.transferTo(saveFile);
-		
+			dto.setFilename(filename);
+			
+			
 		
 		return "redirect:./test_domain.do";
 	}
