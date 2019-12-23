@@ -13,6 +13,7 @@ import com.min.edu.dtos.Paging_Dto;
 import com.min.edu.dtos.StuAvgSel_Dto;
 import com.min.edu.dtos.StuCouSel_Dto;
 import com.min.edu.dtos.StuCou_Dto;
+import com.min.edu.dtos.Student_Dto;
 import com.min.edu.dtos.Subject_Dto;
 
 @Repository
@@ -52,9 +53,8 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 	}
 	// 과정에속한 학생 조회
 	@Override
-	public List<StuCou_Dto> courseinStusel(String cou_code) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Student_Dto> courseinStusel(String cou_code) {
+		return sqlSession.selectList(NS+"courseinStusel",cou_code);
 	}
 // 현재 과정 조회
 	@Override
@@ -132,8 +132,8 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 // 과목조회
 	@Override
 	public List<Subject_Dto> selSubject(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return sqlSession.selectList(NS+"selSubject",map);
 	}
 // 과목 상세 조회
 	@Override

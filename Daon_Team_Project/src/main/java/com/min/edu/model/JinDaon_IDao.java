@@ -9,6 +9,7 @@ import com.min.edu.dtos.Paging_Dto;
 import com.min.edu.dtos.StuAvgSel_Dto;
 import com.min.edu.dtos.StuCouSel_Dto;
 import com.min.edu.dtos.StuCou_Dto;
+import com.min.edu.dtos.Student_Dto;
 import com.min.edu.dtos.Subject_Dto;
 
 public interface JinDaon_IDao {
@@ -22,7 +23,7 @@ public interface JinDaon_IDao {
 	// 예정 과정  수정
 	public boolean wupdateCourse(Course_Dto dto);
 	// 과정에 속한 학생 조회
-	public List<StuCou_Dto> courseinStusel(String cou_code);
+	public List<Student_Dto> courseinStusel(String cou_code);
 	//현재 과정 조회
 	public List<Course_Dto> iselCourse(Map<String, String> map);
 	//종료 과정 조회

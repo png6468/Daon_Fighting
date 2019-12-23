@@ -21,7 +21,7 @@
 </style>
 </head>
 <%
-	List<Course_Dto> lists = (List<Course_Dto>) request.getAttribute("lists");
+	List<Course_Dto> clists = (List<Course_Dto>) request.getAttribute("clists");
 %>
 <body>
 	<table>
@@ -40,9 +40,9 @@
 			<th>총교육시간</th>
 		</tr>
 		<%
-			for (Course_Dto vo : lists) {
+			for (Course_Dto vo : clists) {
 		%>
-		<tr>
+		<tr class="bseldetail" onclick="location.href='./detailCou.do?cou_code=<%=vo.getCou_code()%>'">
 		 
 			<td><input type="hidden" value="<%=vo.getCou_code()%>">
 			</td>

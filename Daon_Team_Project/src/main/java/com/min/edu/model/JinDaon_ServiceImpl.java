@@ -14,6 +14,7 @@ import com.min.edu.dtos.Paging_Dto;
 import com.min.edu.dtos.StuAvgSel_Dto;
 import com.min.edu.dtos.StuCouSel_Dto;
 import com.min.edu.dtos.StuCou_Dto;
+import com.min.edu.dtos.Student_Dto;
 import com.min.edu.dtos.Subject_Dto;
 
 @Service
@@ -49,14 +50,15 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 	// 예정 과정 수정
 	@Override
 	public boolean wupdateCourse(Course_Dto dto) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 	// 과정에속한 학생 조회
 	@Override
-	public List<StuCou_Dto> courseinStusel(String cou_code) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Student_Dto> courseinStusel(String cou_code) {
+		logger.info("과정에속한 학생 조회,{}",cou_code);
+	
+		return dao.courseinStusel(cou_code);
 	}
 // 현재 과정 조회
 	@Override
@@ -133,8 +135,8 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 // 과목조회
 	@Override
 	public List<Subject_Dto> selSubject(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("과목조회,{}",map);
+		return dao.selSubject(map);
 	}
 // 과목 상세 조회
 	@Override

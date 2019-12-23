@@ -3,13 +3,15 @@
 <mapper namespace="com.min.edu.model.JinDaon_DaoImpl.jingu">
 
 	<!--과정 복사 -->
-		<select id="selCopy" parameterType="java.lang.String"
+	<select id="selCopy" parameterType="java.lang.String"
 		resultType="courseDto">
-		SELECT TEA_ID, COU_NAME, COU_EXP,STARTDATE, STATE, COU_CNT FROM 
-			(SELECT TEA_ID, COU_NAME, COU_EXP,STARTDATE, STATE,COU_CNT 
-			FROM D_COURSEWHERE COU_NAME=#{cou_name} 
-			ORDER BY COU_CODE DESC) 
-			WHERE ROWNUM=1
+		SELECT TEA_ID, COU_NAME, COU_EXP,STARTDATE, STATE, COU_CNT
+		FROM
+		(SELECT TEA_ID, COU_NAME, COU_EXP,STARTDATE, STATE,COU_CNT
+		FROM
+		D_COURSE WHERE COU_NAME=#{cou_name}
+		ORDER BY COU_CODE DESC)
+		WHERE ROWNUM=1
 	</select>
 	<!-- 과정 생성 -->
 	<insert id="insertCourse" parameterType="courseDto">
@@ -18,14 +20,14 @@
 		TOTALTIME, ENDDATE,
 		COU_CNT,STATE)VALUES
 		(SEQ.NEXTVAL,#{tea_id},#{cou_name},#{cou_exp},#{startdate},NULL,NULL,(SELECT
-		NVL(MAX(COU_CNT),0)+1  FROM D_COURSE WHERE COU_NAME =
+		NVL(MAX(COU_CNT),0)+1 FROM D_COURSE WHERE COU_NAME =
 		#{cou_name}),'W')
 	</insert>
 	<!-- 과정 삭제 -->
 	<delete id="deleteCourse" parameterType="java.lang.String">
-		DELETE  FROM D_COURSE
-		WHERE ( SELECT COUNT(*)  FROM D_CURRICULUM WHERE
-		COU_CODE=#{cou_code})=0WHERE COU_CODE = #{cou_code}
+		DELETE FROM D_COURSE
+		WHERE ( SELECT COUNT(*) FROM D_CURRICULUM WHERE
+		COU_CODE=#{cou_code})=0 WHERE COU_CODE = #{cou_code}
 	</delete>
 	<!-- 예정 과정 수정 -->
 	<update id="wupdateCourse" parameterType="courseDto">
@@ -33,65 +35,73 @@
 		TEA_ID =#{tea_id},STARTDATE=#{startdate}
 		WHERE COU_CODE=#{cou_code}
 	</update>
-<!-- 	과정에속한 학생 조회 -->
+	<!-- 과정에속한 학생 조회 -->
 	<select id="courseinStusel" parameterType="java.lang.String"
-		resultType="courseDto">
-		SELECT STU_NAME,STU_ID,STU_PHONE,COU_NAME  FROM D_STUDENT
+		resultType="studentDto">
+		SELECT STU_NAME,STU_ID,STU_PHONE,COU_NAME FROM D_STUDENT
 		JOIN D_STUCOU
 		USING(STU_ID) JOIN D_COURSE USING(COU_CODE) WHERE
 		COU_CODE=#{cou_code}
 	</select>
+	
+		<!-- 학생 전체 조회 -->
+	<select id="stulist" parameterType="studentDto">
+		SELECT STU_ID,STU_NAME,STU_PHONE,STU_DELFLAG
+		FROM D_STUDENT
+	</select>
+	
 	<!-- 현재 과정 조회 -->
 	<select id="iselCourse" parameterType="java.util.Map"
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME, STARTDATE, TOTALTIME,
-		TEA_ID, ENDDATE, STATE  FROM(SELECT COU_CODE, COU_CNT, COU_NAME,
-		COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN  FROM
-		D_COURSE)WHERE RN BETWEEN #{start} AND #{end}AND STATE ='I'
+		TEA_ID, ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT, COU_NAME,
+		COU_EXP, STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM
+		D_COURSE) WHERE RN BETWEEN #{startList} AND #{endList}AND STATE ='I'
 	</select>
-<!-- 	종료 과정 조회 -->
+	<!-- 종료 과정 조회 -->
 	<select id="bselCourse" parameterType="java.util.Map"
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME,STARTDATE, TOTALTIME,
 		TEA_ID, ENDDATE,
-		STATE  FROM(SELECT COU_CODE, COU_CNT, COU_NAME,
+		STATE FROM(SELECT COU_CODE, COU_CNT, COU_NAME,
 		COU_EXP, STARTDATE,
-		TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN  FROM
-		D_COURSE)WHERE RN
-		BETWEEN #{start} AND #{end}AND STATE ='B'
+		TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM RN FROM
+		D_COURSE) WHERE RN
+		BETWEEN #{startList} AND #{endList}AND STATE ='B'
 	</select>
-<!-- 	예정 과정 조회 -->
+	<!-- 예정 과정 조회 -->
 	<select id="wselCourse" parameterType="java.util.Map"
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME,STARTDATE,
 		TOTALTIME,
 		TEA_ID, ENDDATE,
-		STATE  FROM(SELECT COU_CODE, COU_CNT,
+		STATE FROM(SELECT COU_CODE, COU_CNT,
 		COU_NAME, COU_EXP,
 		STARTDATE,
 		TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM
-		RN  FROM
-		D_COURSE)WHERE RN
-		BETWEEN #{start} AND #{end}AND STATE ='W'
+		RN FROM
+		D_COURSE)
+		WHERE RN
+		BETWEEN #{startList} AND #{endList}AND STATE ='W'
 	</select>
 	<!-- 과정 상세 조회 -->
 	<select id="detailCourse" parameterType="java.lang.String"
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME, TEA_ID,
-		ENDDATE, STATE  FROM D_COURSEWHERE COU_CODE
-		=#{cou_code}
+		ENDDATE, STATE FROM D_COURSE
+		WHERE COU_CODE =#{cou_code}
 	</select>
 	<!-- 강사 현재 과정 조회 -->
 	<select id="teaiselCourse" parameterType="java.util.Map"
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME, TEA_ID,
-		ENDDATE, STATE  FROM(SELECT COU_CODE, COU_CNT,
+		ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT,
 		COU_NAME, COU_EXP,
 		STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM
-		RN  FROM
-		D_COURSE)WHERE TEA_ID=#{tea_id} AND RN BETWEEN #{start} AND
+		RN FROM
+		D_COURSE) WHERE TEA_ID=#{tea_id} AND RN BETWEEN #{start} AND
 		#{end}AND
 		STATE='I'
 	</select>
@@ -100,11 +110,11 @@
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME, TEA_ID,
-		ENDDATE, STATE  FROM(SELECT COU_CODE, COU_CNT,
+		ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT,
 		COU_NAME, COU_EXP,
 		STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM
-		RN  FROM
-		D_COURSE)WHERE TEA_ID=#{tea_id} AND RN BETWEEN #{start} AND
+		RN FROM
+		D_COURSE) WHERE TEA_ID=#{tea_id} AND RN BETWEEN #{start} AND
 		#{end}AND
 		STATE='B'
 	</select>
@@ -113,11 +123,11 @@
 		resultType="courseDto">
 		SELECT COU_CODE, COU_CNT, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME, TEA_ID,
-		ENDDATE, STATE  FROM(SELECT COU_CODE, COU_CNT,
+		ENDDATE, STATE FROM(SELECT COU_CODE, COU_CNT,
 		COU_NAME, COU_EXP,
 		STARTDATE, TOTALTIME, TEA_ID, ENDDATE, STATE,ROWNUM
-		RN  FROM
-		D_COURSE)WHERE TEA_ID=#{tea_id} AND RN BETWEEN #{start} AND
+		RN FROM
+		D_COURSE) WHERE TEA_ID=#{tea_id} AND RN BETWEEN #{start} AND
 		#{end}AND
 		STATE='W'
 	</select>
@@ -126,7 +136,7 @@
 		resultType="courseDto">
 		SELECT SCSEQ,STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME,ENDDATE,COU_CNT,STATE FROM D_STUCOU JOIN
-		D_COURSEUSING(COU_CODE)WHERE STATE ='I'AND STU_ID =#{stu_id}
+		D_COURSEUSING(COU_CODE) WHERE STATE ='I'AND STU_ID =#{stu_id}
 	</select>
 	<!-- 학생의 종료 과정 -->
 	<select id="stubselCourse" parameterType="java.lang.String"
@@ -134,7 +144,7 @@
 		SELECT SCSEQ,STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME,
 		ENDDATE, COU_CNT, STATE FROM D_STUCOU JOIN
-		D_COURSEUSING(COU_CODE)WHERE
+		D_COURSEUSING(COU_CODE) WHERE
 		STATE ='W'AND STU_ID =#{stu_id}
 	</select>
 	<!-- 학생의 예정 과정 -->
@@ -142,7 +152,7 @@
 		resultType="courseDto">
 		SELECT SCSEQ,STU_ID, TEA_ID, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME,ENDDATE,COU_CNT,STATE FROM D_STUCOU JOIN
-		D_COURSEUSING(COU_CODE)WHERE STATE ='W'AND STU_ID =#{stu_id}
+		D_COURSEUSING(COU_CODE) WHERE STATE ='W'AND STU_ID =#{stu_id}
 	</select>
 	<!-- 과정 + 학생 등록 -->
 	<insert id="studentCourse" parameterType="java.util.Map">
@@ -163,15 +173,16 @@
 		resultType="subjectDto">
 		SELECT SUB_CODE, SUB_NAME, SUB_TIME FROM (SELECT SUB_CODE,
 		SUB_NAME, SUB_EXP,
-		SUB_TIME, ROWNUM RN  FROM D_SUBJECT)WHERE RN BETWEEN
-		#{start} AND
-		#{end}
+		SUB_TIME, ROWNUM RN FROM D_SUBJECT) WHERE RN BETWEEN
+		#{startList} AND
+		#{endList}
 	</select>
 	<!-- 과목 상세 조회 -->
 	<select id="detailSubject" parameterType="java.lang.String"
 		resultType="subjectDto">
-		SELECT SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME  FROM
-		D_SUBJECTWHERE
+		SELECT SUB_CODE, SUB_NAME, SUB_EXP, SUB_TIME FROM
+		D_SUBJECT
+		WHERE
 		SUB_CODE=#{sub_code}
 	</select>
 	<!-- 과목 수정 -->
@@ -179,15 +190,15 @@
 		UPDATE
 		D_SUBJECT SET
 		SUB_NAME = #{sub_name}, SUB_EXP=#{sub_exp},
-		SUB_TIME=#{sub_time}WHERE
+		SUB_TIME=#{sub_time} WHERE
 		SUB_CODE =#{sub_code}AND (SELECT COUNT(*)
-		 FROM D_CURRICULUM WHERE
+		FROM D_CURRICULUM WHERE
 		SUB_CODE=#{sub_code})=0
 	</update>
 	<!-- 과목 삭제 -->
 	<delete id="deleteSubject" parameterType="java.lang.String">
-		DELETE  FROM D_SUBJECT
-		WHERE (SELECT COUNT(*) FROM D_CURRICULUMWHERE
+		DELETE FROM D_SUBJECT
+		WHERE (SELECT COUNT(*) FROM D_CURRICULUM WHERE
 		SUB_CODE=#{sub_code})=0AND SUB_CODE=#{sub_code}
 	</delete>
 	<!-- 커리큘럼 등록 -->
@@ -201,28 +212,33 @@
 		resultType="curriculumDto">
 		SELECT AVG(점수) JUMSU, SUB_CODE, SUB_NAME,
 		SUB_TIME,COU_NAME, CUR_CODE
-		 FROM(SELECT SUM(JUMSU)점수, SUB_CODE,
+		FROM(SELECT SUM(JUMSU)점수, SUB_CODE,
 		SUB_NAME,
-		SUB_TIME,COU_NAME,CUR_CODE,ROWNUM RN  FROM D_ANSWERSCOREJOIN
+		SUB_TIME,COU_NAME,CUR_CODE,ROWNUM RN
+		FROM D_ANSWERSCOREJOIN
 		D_CUREXA
-		USING(CUREXA_CODE)JOIN D_CURRICULUM USING(CUR_CODE)JOIN
+		USING(CUREXA_CODE)JOIN D_CURRICULUM
+		USING(CUR_CODE)JOIN
 		D_SUBJECT
-		USING(SUB_CODE)JOIN D_COURSE USING(COU_CODE)WHERE
-		COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_CODE, SUB_NAME,
-		SUB_TIME,COU_NAME,CUR_CODE,ROWNUM)WHERE RN BETWEEN #{start} AND
+		USING(SUB_CODE)JOIN D_COURSE
+		USING(COU_CODE) WHERE
+		COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_CODE,
+		SUB_NAME,
+		SUB_TIME,COU_NAME,CUR_CODE,ROWNUM) WHERE RN BETWEEN #{start}
+		AND
 		#{end}GROUP BY SUB_CODE, SUB_NAME,SUB_TIME,COU_NAME,CUR_CODE
 	</select>
 	<!-- 커리큘럼 조회(강사) -->
 	<select id="teaselCurriculum" parameterType="java.lang.String"
 		resultType="curriculumDto">
 		SELECT AVG(점수) JUMSU, SUB_CODE, SUB_NAME, SUB_TIME,
-		CUR_CODE  FROM(SELECT
+		CUR_CODE FROM(SELECT
 		SUM(JUMSU)점수, SUB_CODE, SUB_NAME, SUB_TIME,
-		CUR_CODE  FROM
+		CUR_CODE FROM
 		D_ANSWERSCOREJOIN D_CUREXA USING(CUREXA_CODE)JOIN
 		D_CURRICULUM
 		USING(CUR_CODE)JOIN D_SUBJECT USING(SUB_CODE)JOIN D_COURSE
-		USING(COU_CODE)WHERE COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_NAME,
+		USING(COU_CODE) WHERE COU_CODE=#{cou_code}GROUP BY STU_ID, SUB_NAME,
 		SUB_TIME, CUR_CODE)GROUP BY SUB_CODE, SUB_NAME,SUB_TIME, CUR_CODE
 	</select>
 	<!-- 커리큘럼 조회(학생) -->
@@ -231,19 +247,19 @@
 		SELECT SUB_CODE, SUB_NAME, SUB_TIME, SUM(JUMSU) JUMSU,
 		CUR_CODE FROM D_STUCOUJOIN D_COURSE USING(COU_CODE)JOIN D_CURRICULUM
 		USING(COU_CODE)JOIN D_SUBJECT USING(SUB_CODE)JOIN D_ANSWERSCORE
-		USING(STU_ID)WHERE STU_ID=#{stu_id}AND COU_CODE=#{cou_code}GROUP BY
+		USING(STU_ID) WHERE STU_ID=#{stu_id}AND COU_CODE=#{cou_code}GROUP BY
 		STU_ID, SUB_CODE, SUB_NAME, SUB_TIME,CUR_CODE
 	</select>
 	<!-- 커리큘럼 삭제 -->
-	<delete id="deleteCurriculum"  parameterType="java.lang.String">
-		DELETE  FROM D_CURRICULUMWHERE CUR_CODE=#{cur_code}AND (SELECT
-		COUNT(CUREXA_CODE)  FROM D_CUREXA WHERE EXA_CODE ^= '1') ^= 0
+	<delete id="deleteCurriculum" parameterType="java.lang.String">
+		DELETE FROM
+		D_CURRICULUM WHERE CUR_CODE=#{cur_code}AND (SELECT
+		COUNT(CUREXA_CODE)
+		FROM D_CUREXA WHERE EXA_CODE ^= '1') ^= 0
 	</delete>
 
-<!-- 커리큘럼 문제 -->
-<!--     <insert id="createtest" parameterType="java.lang.String">
-    INSERT INTO D_CUREXA
-    (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, '1', '0')
-    </insert> -->
+	<!-- 커리큘럼 문제 -->
+	<!-- <insert id="createtest" parameterType="java.lang.String"> INSERT INTO 
+		D_CUREXA (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT) VALUES(CUREXA_SEQ.NEXTVAL, 
+		#{cur_code}, '1', '0') </insert> -->
 </mapper>

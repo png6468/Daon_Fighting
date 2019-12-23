@@ -12,12 +12,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.min.edu.dtos.Course_Dto;
 import com.min.edu.dtos.Paging_Dto;
+import com.min.edu.dtos.StuCou_Dto;
+import com.min.edu.dtos.Student_Dto;
+import com.min.edu.dtos.Subject_Dto;
 import com.min.edu.model.JinDaon_IService;
 
 @Controller
@@ -41,35 +45,36 @@ public class JinController {
 	}
 
 	@RequestMapping(value = "/iselCourse.do", method = RequestMethod.GET)
-	public String iselCourseList(Paging_Dto dto, Model model) {
+	public String iselCourseList(Model model) {
 		logger.info("현재 진행중인 전체 과정 조회");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("startList", "1");
 		map.put("endList", "5");
-		List<Course_Dto> lists = service.iselCourse(map);
-		model.addAttribute("lists", lists);
+		List<Course_Dto> clists = service.iselCourse(map);
+
+		model.addAttribute("clists", clists);
 		return "iselCourse_List";
 	}
 
 	@RequestMapping(value = "/bselCourse.do", method = RequestMethod.GET)
-	public String bselCourseList(Model model, Course_Dto dto) {
+	public String bselCourseList(Model model) {
 		logger.info("종료된 전체 과정 조회");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("startList", "1");
 		map.put("endList", "5");
-		List<Course_Dto> lists = service.bselCourse(map);
-		model.addAttribute("lists", lists);
+		List<Course_Dto> clists = service.bselCourse(map);
+		model.addAttribute("clists", clists);
 		return "bselCourse_List";
 	}
 
 	@RequestMapping(value = "/wselCourse.do", method = RequestMethod.GET)
-	public String wselCourseList(Model model, Course_Dto dto) {
+	public String wselCourseList(Model model) {
 		logger.info("예정된 전체 과정 조회");
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("startList", "1");
 		map.put("endList", "5");
-		List<Course_Dto> lists = service.wselCourse(map);
-		model.addAttribute("lists", lists);
+		List<Course_Dto> clists = service.wselCourse(map);
+		model.addAttribute("clists", clists);
 		return "wselCourse_List";
 	}
 
@@ -84,12 +89,30 @@ public class JinController {
 		return isc ? "redirect:/insertCourse" : "redirect:/gwajungmain";
 	}
 
-	@RequestMapping(value = "/detailCou.do",method = RequestMethod.GET)
-	public String dCourse(HttpSession session, String cou_code) {
+	@RequestMapping(value = "/detailCou.do", method = RequestMethod.GET)
+	public String dCourse(Model model, String cou_code) {
 		logger.info("detailCourse가들어가는중,{}");
 		Course_Dto cdto = service.detailCourse(cou_code);
-		session.setAttribute("cdto", cdto);
+		model.addAttribute("cdto", cdto);
 		return "detailCourse";
 	}
 
+	@RequestMapping(value = "/coustu.do", method = RequestMethod.GET)
+	public String courseinStu(Model model, String cou_code) {
+		logger.info("courseinStu,{}",cou_code);
+		List<Student_Dto> sclist = service.courseinStusel(cou_code);
+		model.addAttribute("sclist", sclist);	
+		return "cou_stuList";
+	}
+	
+	@RequestMapping(value = "/sublist.do" ,method = RequestMethod.GET)
+	public String Subjectlist(Model model) {
+		logger.info("Subjectlist,{}");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("startList", "1");
+		map.put("endList", "5");
+		List<Subject_Dto> sulist =	service.selSubject(map);
+		model.addAttribute("sulist", sulist);
+		return"Sub_list";
+	}
 }
