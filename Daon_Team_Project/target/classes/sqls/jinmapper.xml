@@ -19,7 +19,7 @@
 		(COU_CODE, TEA_ID, COU_NAME, COU_EXP, STARTDATE,
 		TOTALTIME, ENDDATE,
 		COU_CNT,STATE)VALUES
-		(SEQ.NEXTVAL,#{tea_id},#{cou_name},#{cou_exp},#{startdate},NULL,NULL,(SELECT
+		(COU_CODE.NEXTVAL,#{tea_id},#{cou_name},#{cou_exp},#{startdate},NULL,NULL,(SELECT
 		NVL(MAX(COU_CNT),0)+1 FROM D_COURSE WHERE COU_NAME =
 		#{cou_name}),'W')
 	</insert>
@@ -163,10 +163,9 @@
 	</insert>
 	<!-- 과목 등록 -->
 	<insert id="insertSubject" parameterType="subjectDto">
-		INSERT
-		INTO D_SUBJECT
+		INSERT INTO D_SUBJECT
 		(SUB_CODE, SUB_NAME, SUB_EXP,
-		SUB_TIME)VALUES(SEQ.NEXTVAL,#{sub_name},#{sub_exp},#{sub_time});
+		SUB_TIME)VALUES(SUB_CODE.NEXTVAL,#{sub_name},#{sub_exp},#{sub_time})
 	</insert>
 	<!-- 과목 조회 -->
 	<select id="selSubject" parameterType="subjectDto"
@@ -185,15 +184,13 @@
 		WHERE
 		SUB_CODE=#{sub_code}
 	</select>
+	
 	<!-- 과목 수정 -->
 	<update id="updateSubject" parameterType="subjectDto">
-		UPDATE
-		D_SUBJECT SET
-		SUB_NAME = #{sub_name}, SUB_EXP=#{sub_exp},
-		SUB_TIME=#{sub_time} WHERE
-		SUB_CODE =#{sub_code}AND (SELECT COUNT(*)
-		FROM D_CURRICULUM WHERE
-		SUB_CODE=#{sub_code})=0
+	UPDATE D_SUBJECT 
+		SET SUB_NAME = #{sub_name}, SUB_EXP=#{sub_exp}, SUB_TIME=#{sub_time} 
+			WHERE SUB_CODE =#{sub_code}
+			AND (SELECT COUNT(*) FROM D_CURRICULUM WHERE SUB_CODE=#{sub_code})=0
 	</update>
 	<!-- 과목 삭제 -->
 	<delete id="deleteSubject" parameterType="java.lang.String">
@@ -259,7 +256,7 @@
 	</delete>
 
 	<!-- 커리큘럼 문제 -->
-	<!-- <insert id="createtest" parameterType="java.lang.String"> INSERT INTO 
+	<insert id="createtest" parameterType="java.lang.String"> INSERT INTO 
 		D_CUREXA (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT) VALUES(CUREXA_SEQ.NEXTVAL, 
-		#{cur_code}, '1', '0') </insert> -->
+		#{cur_code}, '1', '0') </insert>
 </mapper>

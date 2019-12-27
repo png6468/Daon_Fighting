@@ -36,7 +36,7 @@ List<Subject_Dto> sulist =	(List<Subject_Dto>)request.getAttribute("sulist");
 for(Subject_Dto sdto : sulist) {
 %>
 
-		<tr onclick="location.href='./detailCou.do?cou_code=<%=sdto.getSub_code()%>'">
+		<tr onclick="location.href='./de_sub.do?sub_code=<%=sdto.getSub_code()%>'">
 			
 			<th><%=sdto.getSub_name()%></th>
 			<th><%=sdto.getSub_time()%></th>
@@ -46,5 +46,6 @@ for(Subject_Dto sdto : sulist) {
 			}
 		%>
 	</table>
+	<input type="button" value="메인으로" onclick="location.href='./sijak.do'">
 </body>
 </html>

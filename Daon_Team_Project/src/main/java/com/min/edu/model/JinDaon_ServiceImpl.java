@@ -129,8 +129,8 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 // 과목 등록
 	@Override
 	public boolean insertSubject(Subject_Dto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("과목 등록,{}",dto);
+		return dao.insertSubject(dto);
 	}
 // 과목조회
 	@Override
@@ -141,14 +141,14 @@ public class JinDaon_ServiceImpl implements JinDaon_IService {
 // 과목 상세 조회
 	@Override
 	public Subject_Dto detailSubject(String sub_code) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("과목 상세 조회,{}",sub_code);
+		return dao.detailSubject(sub_code);
 	}
 //과목 수정
 	@Override
 	public boolean updateSubject(Subject_Dto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("과목수정,{}",dto);
+		return dao.updateSubject(dto);
 	}
 //과목 삭제
 	@Override

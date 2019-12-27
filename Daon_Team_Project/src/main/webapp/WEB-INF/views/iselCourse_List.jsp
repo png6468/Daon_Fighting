@@ -63,6 +63,7 @@ th, td {
 		%>
 
 	</table>
-	
+		<input type="button"
+			value="메인으로" onclick="location.href='./sijak.do'">
 </body>
 </html>
