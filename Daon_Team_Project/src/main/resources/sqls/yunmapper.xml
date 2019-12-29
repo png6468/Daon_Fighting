@@ -54,7 +54,7 @@
     <insert id="copyinsert" parameterType="curexaDto">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, #{exa_code}, #{allot})
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, #{exa_code}, '0')
     </insert>
     
     <!--문제를 시험에서 삭제-->
@@ -83,7 +83,7 @@
     <insert id="curGaekexa" parameterType="curexaDto">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, '0')
     </insert>
     
     <!--서술형 유형 문제 추가-->
@@ -101,7 +101,7 @@
     <insert id="curSesulexa" parameterType="curexaDto">
     INSERT INTO D_CUREXA
     (CUREXA_CODE, CUR_CODE, EXA_CODE, ALLOT)
-    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, #{allot})
+    VALUES(CUREXA_SEQ.NEXTVAL, #{cur_code}, EXAM_SEQ.CURRVAL, '0')
     </insert>
     
     <!--포폴형 유형 문제 추가-->
@@ -126,6 +126,53 @@
     <select id="filename" resultType="java.lang.String">
     SELECT FILESEQ.NEXTVAL FROM DUAL
     </select>
+    
+    
+    <select id="sihumExaSList" parameterType="java.lang.String" resultType="selectselDto">
+    SELECT CUREXA_CODE, EXA_CODE,CONTENT,FILENAME, COR_ANSWER,WRO_ONE,WRO_TWO,WRO_THREE 
+    	FROM
+    		(SELECT EXA_CODE,CONTENT,FILENAME, COR_ANSWER,WRO_ONE,WRO_TWO,WRO_THREE, ROWNUM RN FROM D_EXAMSELECT) JOIN 
+    		(SELECT CUREXA_CODE, EXA_CODE FROM D_CUREXA WHERE CUR_CODE=#{cur_code})
+    			USING(EXA_CODE)
+    		JOIN
+			(SELECT EXA_CODE, EXA_MEAN FROM D_EXAM)
+			USING(EXA_CODE)
+				WHERE EXA_MEAN = 'S' ORDER BY RN
+    </select>
+    
+    
+    <select id="sihumExaDList" parameterType="java.lang.String" resultType="descportselDto">
+    SELECT CUREXA_CODE, EXA_CODE,CONTENT,FILENAME, STANDARD 
+    	FROM    		
+    		(SELECT EXA_CODE,CONTENT,FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
+    		JOIN 
+    		(SELECT CUREXA_CODE, EXA_CODE FROM D_CUREXA WHERE CUR_CODE=#{cur_code})
+    			USING(EXA_CODE)
+    		JOIN
+			(SELECT EXA_CODE, EXA_MEAN FROM D_EXAM)
+			USING(EXA_CODE)
+				WHERE EXA_MEAN = 'D' 
+					ORDER BY RN
+    </select>
+    
+    <select id="sihumExaPList" parameterType="java.lang.String" resultType="descportselDto">
+    SELECT CUREXA_CODE, EXA_CODE,CONTENT,FILENAME, STANDARD 
+    	FROM    		
+    		(SELECT EXA_CODE,CONTENT,FILENAME, STANDARD, ROWNUM RN FROM D_EXAMDESCRIPTIVE)
+    		JOIN 
+    		(SELECT CUREXA_CODE, EXA_CODE FROM D_CUREXA WHERE CUR_CODE=#{cur_code})
+    			USING(EXA_CODE)
+    		JOIN
+			(SELECT EXA_CODE, EXA_MEAN FROM D_EXAM)
+			USING(EXA_CODE)
+				WHERE EXA_MEAN = 'P' 
+					ORDER BY RN
+    </select>
+    
+    <update id="jumsuSet" parameterType="curexaDto">
+    UPDATE D_CUREXA SET ALLOT=#{allot} WHERE CUREXA_CODE=#{curexa_code}
+    </update>
+    
     
 	
 </mapper>

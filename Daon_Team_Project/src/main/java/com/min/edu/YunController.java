@@ -175,7 +175,6 @@ public class YunController {
 	
 	@RequestMapping(value = "/upload.do", method = RequestMethod.POST)
 	public String joinUs(MultipartFile picFile, HttpServletRequest request) throws IOException {
-		System.out.println("왜 여기도 못오니 ㅠㅠ");
 		logger.info("upload 실행 제발!");
 		String path = request.getSession().getServletContext().getRealPath("/image/");
 		String filename = picFile.getOriginalFilename();

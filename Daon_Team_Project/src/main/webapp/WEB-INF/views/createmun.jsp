@@ -112,11 +112,9 @@ form {
 <input type="hidden" name="mean" value="S">
 <table border="1">
 	<tr>
-		<td colspan="2">
+		<td colspan="4">
 			내용
 		</td>
-		<td colspan="1">점수</td>
-		<td colspan="1"><input type="text" name="allot"></td>
 	</tr>
 	<tr>
 		<td colspan="4">
@@ -152,11 +150,9 @@ form {
 <input type="hidden" id="hiddenval" name="mean">
 <table border="1">
 	<tr>
-		<td colspan="2">
+		<td colspan="4">
 			내용
 		</td>
-		<td colspan="1">점수</td>
-		<td colspan="1"><input type="text" name="allot"></td>
 	</tr>
 	<tr>
 		<td colspan="4">
