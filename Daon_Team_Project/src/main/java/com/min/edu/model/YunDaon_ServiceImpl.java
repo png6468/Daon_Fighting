@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.min.edu.YunController;
 import com.min.edu.dtos.CurExa_Dto;
+import com.min.edu.dtos.DescPortSel_Dto;
 import com.min.edu.dtos.ExamDesc_Dto;
 import com.min.edu.dtos.ExamSelect_Dto;
+import com.min.edu.dtos.SelectSel_Dto;
 
 @Service
 public class YunDaon_ServiceImpl implements YunDaon_IService {
@@ -104,6 +106,27 @@ public class YunDaon_ServiceImpl implements YunDaon_IService {
 	public boolean deldefault(String cur_code) {
 		// TODO Auto-generated method stub
 		return dao.deldefault(cur_code);
+	}
+
+	@Override
+	public List<SelectSel_Dto> sihumExaSList(String cur_code) {
+		return dao.sihumExaSList(cur_code);
+	}
+
+	@Override
+	public List<DescPortSel_Dto> sihumExaDList(String cur_code) {
+		return dao.sihumExaDList(cur_code);
+	}
+
+	@Override
+	public List<DescPortSel_Dto> sihumExaPList(String cur_code) {
+		return dao.sihumExaPList(cur_code);
+	}
+
+	@Override
+	public boolean jumsuSet(CurExa_Dto dto) {
+		// TODO Auto-generated method stub
+		return dao.jumsuSet(dto);
 	}
 	
 	

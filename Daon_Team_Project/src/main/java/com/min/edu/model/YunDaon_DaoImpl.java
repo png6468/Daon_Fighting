@@ -11,8 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import com.min.edu.YunController;
 import com.min.edu.dtos.CurExa_Dto;
+import com.min.edu.dtos.DescPortSel_Dto;
 import com.min.edu.dtos.ExamDesc_Dto;
 import com.min.edu.dtos.ExamSelect_Dto;
+import com.min.edu.dtos.SelectSel_Dto;
 
 @Repository
 public class YunDaon_DaoImpl implements YunDaon_IDao {
@@ -147,6 +149,26 @@ public class YunDaon_DaoImpl implements YunDaon_IDao {
 		// TODO Auto-generated method stub
 		logger.info("추가된 문제를 시험에 추가");
 		int n = session.insert(ns+"curPopolexa", dto);
+		return n>0?true:false;
+	}
+	@Override
+	public List<SelectSel_Dto> sihumExaSList(String cur_code) {
+		logger.info("시험문제 선택형");
+		return session.selectList(ns+"sihumExaSList", cur_code);
+	}
+	@Override
+	public List<DescPortSel_Dto> sihumExaDList(String cur_code) {
+		logger.info("시험문제 서술형");
+		return session.selectList(ns+"sihumExaDList", cur_code);
+	}
+	@Override
+	public List<DescPortSel_Dto> sihumExaPList(String cur_code) {
+		logger.info("시험문제 포폴형");
+		return session.selectList(ns+"sihumExaPList", cur_code);
+	}
+	@Override
+	public boolean jumsuSet(CurExa_Dto dto) {
+		int n = session.update(ns+"jumsuSet", dto);
 		return n>0?true:false;
 	}
 	

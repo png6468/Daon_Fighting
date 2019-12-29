@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.min.edu.dtos.CurExa_Dto;
+import com.min.edu.dtos.DescPortSel_Dto;
 import com.min.edu.dtos.ExamDesc_Dto;
 import com.min.edu.dtos.ExamSelect_Dto;
+import com.min.edu.dtos.SelectSel_Dto;
 
 public interface YunDaon_IService {
 
@@ -24,7 +26,11 @@ public interface YunDaon_IService {
 	public boolean deldefault(String cur_code);
 	public boolean addport(ExamDesc_Dto desdto, CurExa_Dto curdto);
 	
+	public List<SelectSel_Dto> sihumExaSList(String cur_code);
+	public List<DescPortSel_Dto> sihumExaDList(String cur_code);
+	public List<DescPortSel_Dto> sihumExaPList(String cur_code);
 	
+	public boolean jumsuSet(CurExa_Dto dto);
 	
 	
 }
