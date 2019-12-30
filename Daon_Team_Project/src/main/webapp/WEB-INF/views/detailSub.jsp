@@ -23,7 +23,8 @@
 %>
 <body>
 
-
+<form action="./delSub.do" method="post">
+<input type="hidden" name="sub_code" value="<%=sdto.getSub_code()%>">
 	<table>
 		<tr>
 			<th><%=sdto.getSub_name()%></th>
@@ -36,8 +37,8 @@
 		</tr>
 	</table>
 	<input type="button" value="과목수정" onclick="location.href='./modfysubform.do?sub_code=<%=sdto.getSub_code()%>'">
-
+	<input type="submit" value="삭제" > 
 	<input type="button" value="완료">
-
+</form>
 </body>
 </html>

@@ -27,9 +27,9 @@
 	<delete id="deleteCourse" parameterType="java.lang.String">
 		DELETE FROM D_COURSE
 		WHERE ( SELECT COUNT(*) FROM D_CURRICULUM WHERE
-		COU_CODE=#{cou_code})=0 WHERE COU_CODE = #{cou_code}
+		COU_CODE=#{cou_code})=0 AND COU_CODE = #{cou_code}
 	</delete>
-	<!-- 예정 과정 수정 -->
+		<!-- 예정 과정 수정 -->
 	<update id="wupdateCourse" parameterType="courseDto">
 		UPDATE D_COURSE SET
 		TEA_ID =#{tea_id},STARTDATE=#{startdate}

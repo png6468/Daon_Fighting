@@ -55,7 +55,7 @@ public interface JinDaon_IDao {
 	// 과목 수정
 	public boolean updateSubject(Subject_Dto dto);
 	// 과목 삭제
-	public boolean deleteSubject(Map<String, String> map);
+	public boolean deleteSubject(String sub_code);
 	// 커리큘럼 등록
 	public boolean insertCurriculum(Curriculum_Dto dto);
 	//커리큘럼 조회(관리자)

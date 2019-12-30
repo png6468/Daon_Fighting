@@ -36,21 +36,21 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 	public boolean insertCourse(Course_Dto dto) {
 
 		int i = sqlSession.insert(NS + "insertCourse", dto);
-		return  i > 0 ?true:false;
+		return i > 0 ? true : false;
 	}
 
 	// 과정 삭제
 	@Override
 	public boolean deleteCourse(String cou_code) {
-		// TODO Auto-generated method stub
-		return false;
+		int d = sqlSession.delete(NS + "deleteCourse", cou_code);
+		return d > 0 ? true : false;
 	}
 
 	// 예정 과정 수정
 	@Override
 	public boolean wupdateCourse(Course_Dto dto) {
-		// TODO Auto-generated method stub
-		return false;
+		int u = sqlSession.update(NS + "wupdateCourse", dto);
+		return u > 0 ? true : false;
 	}
 
 	// 과정에속한 학생 조회
@@ -140,7 +140,7 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 	@Override
 	public boolean insertSubject(Subject_Dto dto) {
 		int i = sqlSession.insert(NS + "insertSubject", dto);
-		return i>0?true:false;
+		return i > 0 ? true : false;
 	}
 
 // 과목조회
@@ -165,9 +165,9 @@ public class JinDaon_DaoImpl implements JinDaon_IDao {
 
 //과목 삭제
 	@Override
-	public boolean deleteSubject(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteSubject(String sub_code) {
+		int d = sqlSession.delete(NS + "deleteSubject", sub_code);
+		return d > 0 ? true : false;
 	}
 
 // 커리큘롬 등록

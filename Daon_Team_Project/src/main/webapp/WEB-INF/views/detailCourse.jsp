@@ -22,6 +22,8 @@
 	Course_Dto detail = (Course_Dto) request.getAttribute("cdto");
 %>
 <body>
+<form action="./delCou.do" method="post">
+<input type="hidden" name="cou_code" value="<%=detail.getCou_code()%>">
 	<table>
 		<tr>
 			<th>회차</th>
@@ -46,11 +48,14 @@
 			onclick="location.href='./coustu.do?cou_code=<%=detail.getCou_code()%>'">
 
 			<td>학생</td>
+		
 		</tr>
-		<tr
-		onclick="location.href='./coustu.do?cou_code=<%=detail.getCou_code()%>'">
-			<td>과목</td>
-		</tr>
+		
 	</table>
+			<input type="button" value="과정수정" onclick="location.href='./modfycouform.do?cou_code=<%=detail.getCou_code()%>'">
+			<input type="submit" value="삭제" > 
+			
+	</form>
+
 </body>
 </html>

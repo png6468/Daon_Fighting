@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import com.min.edu.dtos.Paging_Dto;
 import com.min.edu.dtos.StuCou_Dto;
 import com.min.edu.dtos.Student_Dto;
 import com.min.edu.dtos.Subject_Dto;
+import com.min.edu.dtos.Teacher_Dto;
 import com.min.edu.model.JinDaon_IService;
 
 @Controller
@@ -57,6 +59,32 @@ public class JinController {
 		return "iselCourse_List";
 	}
 
+	@RequestMapping(value = "/iCourseform.do", method = RequestMethod.GET)
+	public String insertCouform() {
+		logger.info("iCourseform 들어옴", new Date());
+
+		return "insertCou";
+	}
+
+	@RequestMapping(value = "/insert_Course.do", method = RequestMethod.POST)
+	public String insert_Course(Course_Dto dto, HttpSession session) {
+		logger.info("insertCourse 가 들어 옵니다");
+		Course_Dto Cdto = new Course_Dto();
+		Cdto.setCou_name(dto.getCou_name());
+		Cdto.setTea_id(dto.getTea_id());
+		Cdto.setStartdate(dto.getStartdate());
+		Cdto.setCou_exp(dto.getCou_exp());
+		boolean isc = service.insertCourse(Cdto);
+		return isc ? "redirect:/wselCourse.do" : "redirect:/iCourseform.do";
+	}
+
+	@RequestMapping(value = "/delCou.do", method = RequestMethod.POST)
+	public String deleteCourse(String cou_code) {
+		logger.info("deleteCourse");
+		boolean isc = service.deleteCourse(cou_code);
+		return isc ? "redirect:/wselCourse.do" : "redirect:/sijak.do";
+	}
+
 	@RequestMapping(value = "/bselCourse.do", method = RequestMethod.GET)
 	public String bselCourseList(Model model) {
 		logger.info("종료된 전체 과정 조회");
@@ -80,7 +108,7 @@ public class JinController {
 	}
 
 	////////////
-	
+
 	@RequestMapping(value = "/detailCou.do", method = RequestMethod.GET)
 	public String dCourse(Model model, String cou_code) {
 		logger.info("detailCourse가들어가는중,{}");
@@ -154,28 +182,36 @@ public class JinController {
 		sdto.setSub_time(dto.getSub_time());
 
 		boolean isc = service.insertSubject(dto);
-		return isc ?"redirect:/sublist.do":  "redirect:/iSubjectform.do";
+		return isc ? "redirect:/sublist.do" : "redirect:/iSubjectform.do";
 
 	}
-	
-	@RequestMapping(value = "/iCourseform.do", method = RequestMethod.GET)
-	public String insertCouform() {
-		logger.info("iCourseform 들어옴", new Date());
 
-		return "insertCou";
+	@RequestMapping(value = "/delSub.do", method = RequestMethod.POST)
+	public String deleteSubject(String sub_code) {
+		logger.info("deleteSubject,{}");
+		boolean isc = service.deleteSubject(sub_code);
+		return isc ? "redirect:/sublist.do" : "redirect:/sijak.do";
 	}
-	
-	@RequestMapping(value = "/insert_Course.do", method = RequestMethod.POST)
-	public String insert_Course(Course_Dto dto, HttpSession session) {
-		logger.info("insertCourse 가 들어 옵니다");
+
+	@RequestMapping(value = "/modfycouform.do", method = RequestMethod.GET)
+	public String modfy_couform(Model model, String cou_code) {
+		Course_Dto coudto = service.detailCourse(cou_code);
+		logger.info("modfy_cou,{}", cou_code);
+		model.addAttribute("coudto", coudto);
+		return "modfycouform";
+	}
+
+	@RequestMapping(value = "/modfycou.do", method = RequestMethod.POST)
+	public String modfy_cou(Course_Dto dto,Teacher_Dto tdto) {
 		Course_Dto Cdto = new Course_Dto();
+		
+		Cdto.setCou_code( dto.getCou_code());
 		Cdto.setCou_name(dto.getCou_name());
-		Cdto.setTea_id(dto.getTea_id());
+		Cdto.setTea_id(tdto.getTea_id());
 		Cdto.setStartdate(dto.getStartdate());
 		Cdto.setCou_exp(dto.getCou_exp());
-		boolean isc = service.insertCourse(Cdto);
-		return isc ? "redirect:/wselCourse.do" :"redirect:/iCourseform.do";
+
+		boolean isc = service.wupdateCourse(Cdto);
+		return isc ? "redirect:/wselCourse.do" : "redirect:/modfycouform.do";
 	}
-
-
 }
